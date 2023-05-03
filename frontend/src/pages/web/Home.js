@@ -1,9 +1,15 @@
-import React from 'react';
-import {Banner, VideoJS} from "../../components/Web";
+import React, {useState} from 'react';
+import {Banner, VideoJS, BasicModal, FormularioModal} from "../../components/Web";
 import videojs from 'video.js';
-
+import { Button } from 'semantic-ui-react';
 
 export function Home() {
+
+  const [showModal, setShowModal] = useState(false);
+  const [reload, setReload] = useState(false);
+
+  const onOpenCloseModal = () => setShowModal((prevState) => !prevState);
+  const onReload = () => setReload((prevState) => !prevState);
 
   const playerRef = React.useRef(null);
 
@@ -30,11 +36,22 @@ export function Home() {
       videojs.log('player will dispose');
     });
   };
+  
   return (
     
     <div>
         <Banner />
+        <Button primary onClick={onOpenCloseModal}>Cargar video</Button>
         <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+        <BasicModal 
+        show={showModal} 
+        close={onOpenCloseModal} 
+        title="Cargar video" >
+          <FormularioModal/>
+        </BasicModal>
+
     </div>
+
+   
   );
 }
