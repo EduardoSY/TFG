@@ -8,6 +8,7 @@ const { resourceLimits } = require("worker_threads");
 
 const upload = multer();
 
+//ESTO NO CUMPLE PRINCIPIO SOLID PERO BUENO, HAY QUE MODIFICARLO
 async function get_result_transcription(config){
   const endpoint = "https://api.speechtext.ai/results?";
   let resultado = undefined;
@@ -18,7 +19,6 @@ async function get_result_transcription(config){
     console.log("ROTO en 1");
     break;
   }
-  //console.log(results);
   console.log(`Task status: ${results.data.status}`);
   if (results.data.status === "failed") {
   console.log("FALLO");
@@ -64,10 +64,9 @@ async function request_transcription(video_path){
     console.log(video_path)
     const video = fs.readFileSync(video_path, (err, data) => {
         if (err) {
-          //console.error(err);
+          console.error(err);
           return;
         }
-        //console.log(data);
       });
 
       const response = await axios.post('https://api.speechtext.ai/recognize?key=4374fd964d4a4a4a9fb30b388947f162&language=es-ES', video, {
@@ -78,28 +77,19 @@ async function request_transcription(video_path){
 
          console.log(response.data);
 
-    const response_config = {
+    
+  //LIMPIAR ESTO Y PONERLO MAS GENERAL
+      const response_config = {
       "task": response.data.id,
       "key": "4374fd964d4a4a4a9fb30b388947f162",
-      //"output": "srt",
       "max_caption_words": 15
     };
 
-    //console.log("_-_-_-_-_-_-_-_-_-_-_-_-_-_-");
-    //console.log(response_config);
 
     console.log("Transcipcion INICIADA");
     const resultado_final = await get_result_transcription(response_config);
     const resultado_formateado  = JSON.parse(resultado_final);
-    //console.log("___________________________________");
-    //console.log(resultado_final);
-
-    //const nombre_fichero_base = path.basename(video_path);
-    //const ruta_ficheros = "../uploads/";
-
-    //const stringformateado = resultado_final.replace(/\n/g, "\r\n");
-    
-    
+  
     fs.writeFileSync( video_path + ".srt", resultado_formateado);
 
     // const formData = new FormData();
