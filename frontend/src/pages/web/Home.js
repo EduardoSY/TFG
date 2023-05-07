@@ -7,13 +7,7 @@ export function Home() {
 
   const [showModal, setShowModal] = useState(false);
   const [reload, setReload] = useState(false);
-
-  const onOpenCloseModal = () => setShowModal((prevState) => !prevState);
-  const onReload = () => setReload((prevState) => !prevState);
-
-  const playerRef = React.useRef(null);
-
-  const videoJsOptions = {
+  const [videoJsOptions, setVideoJsOptions] = useState({
     autoplay: true,
     controls: true,
     responsive: true,
@@ -22,7 +16,23 @@ export function Home() {
       src: 'http://127.0.0.1:8887/Muito_ArmaCSGO_Esp.mp4',
       type: 'video/mp4'
     }]
-  };
+  });
+
+  const onOpenCloseModal = () => setShowModal((prevState) => !prevState);
+  const onReload = () => setReload((prevState) => !prevState);
+
+  const playerRef = React.useRef(null);
+
+  // const videoJsOptions = {
+  //   autoplay: true,
+  //   controls: true,
+  //   responsive: true,
+  //   fluid: true,
+  //   sources: [{
+  //     src: videoUrl || 'http://127.0.0.1:8887/Muito_ArmaCSGO_Esp.mp4',
+  //     type: 'video/mp4'
+  //   }]
+  // };
 
   const handlePlayerReady = (player) => {
     playerRef.current = player;
@@ -36,18 +46,31 @@ export function Home() {
       videojs.log('player will dispose');
     });
   };
+
+  const setVideoUrl = (url) => {
+    setVideoJsOptions((prevOptions) => ({
+      ...prevOptions,
+      sources: [{
+        src: url,
+        type: 'video/mp4'
+      }]
+    }));
+  };
+
+  console.log(videoJsOptions.sources[0].src);
   
   return (
     
     <div>
         <Banner />
         <Button primary onClick={onOpenCloseModal}>Cargar video</Button>
+        <p>Video URL: {videoJsOptions.sources[0].src}</p>
         <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
         <BasicModal 
         show={showModal} 
         close={onOpenCloseModal} 
         title="Cargar video" >
-          <FormularioModal/>
+          <FormularioModal setVideoUrl={setVideoUrl}/>
         </BasicModal>
 
     </div>

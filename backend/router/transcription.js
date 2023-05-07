@@ -1,6 +1,6 @@
 const express = require("express");
 const TranscriptionController = require("../controllers/transcription.js");
-
+const path = require('path');
 const api = express.Router();
 
 //api.post("/transcrip/speechtext", TranscriptionController.request_transcription);
@@ -22,9 +22,11 @@ var upload = multer({ storage: storage })
 api.post('/transcrip/speechtext', upload.single("video"), (req, res) => {
   const video = req.file;
   console.log(video);
-  TranscriptionController.request_transcription(req.file.path)
+  const basename = path.basename(req.file.path.replace(/\\/g, "/"));
+  //TranscriptionController.request_transcription(req.file.path)
   // Aquí puedes procesar el archivo de video recibido
-  res.send('Video recibido');
+  res.status(200).send(basename);
+  //Devolver aquí el nombre del video asignado
 });
 
 module.exports = api;

@@ -2,7 +2,7 @@ import React, {useState}from 'react';
 import axios from 'axios';
 import { Form, Dropdown, Button} from 'semantic-ui-react';
 
-export function FormularioModal() {
+export function FormularioModal({ setVideoUrl }) {
 
     const options = [
         { key: 'es', text: 'Español', value: 'Español' },
@@ -29,6 +29,10 @@ export function FormularioModal() {
     });
 
     console.log(response.data);
+    const new_video_path = "http://127.0.0.1:8887/" + response.data;
+    setVideoUrl(new_video_path);
+    
+
   };
   return (
     <Form>
@@ -43,6 +47,7 @@ export function FormularioModal() {
         />
       </Form.Field>
       <Button type='submit' onClick={handleSubmit}>Submit</Button>
+      
 
     </Form>
   )
