@@ -37,7 +37,7 @@ async function get_result_transcription(config){
   const response_config_srt = {
     "key": "4374fd964d4a4a4a9fb30b388947f162",
     "task": config.task,
-    "output": "srt",
+    "output": "vtt",
     "max_caption_words": 15
   }
 
@@ -90,7 +90,7 @@ async function request_transcription(video_path){
     const resultado_final = await get_result_transcription(response_config);
     const resultado_formateado  = JSON.parse(resultado_final);
   
-    fs.writeFileSync( video_path + ".srt", resultado_formateado);
+    fs.writeFileSync( video_path + ".vtt", resultado_formateado);
 
     // const formData = new FormData();
     // formData.append('post-body', video);
