@@ -41,8 +41,6 @@ export function FormularioModalStreaming({ setVideoUrlStreaming }) {
         <Form.Input name="file" type="input" placeholder="Fichero" onChange={handleChange}/>
       </Form.Field>
       <Button type='submit' onClick={handleSubmit}>Submit</Button>
-      
-
     </Form>
   )
 }
