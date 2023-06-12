@@ -1,0 +1,13 @@
+
+.video-container {
+    padding: 10px 100px;
+    //width: 640px; /* ancho */
+    //height: 360px; /* alto */   
+}
+
+.button-div{
+    display: flex; /* establece el contenedor como un flexbox */
+    justify-content: center; /* centra horizontalmente los elementos */
+    align-items: center; /* centra verticalmente los elementos */
+    padding-top: 20px;
+}

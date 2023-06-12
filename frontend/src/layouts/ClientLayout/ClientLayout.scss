@@ -1,0 +1,22 @@
+@import "../../scss/index.scss";
+.client-layout{
+    background-color: $color1;
+
+
+    &__footer{
+        margin-top: 50px;
+        padding: 20px 0px 10px 0px;
+        border-top: 3px solid $color2;
+
+        >.ui.container{
+            display: flex;
+
+            &:last-of-type{
+                justify-content: space-between;
+                margin-top: 30px;
+                color: $color3;
+                font-size: 12;
+            }
+        }
+    }
+}

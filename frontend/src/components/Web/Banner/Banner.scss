@@ -1,0 +1,34 @@
+@import "../../../scss/index.scss";
+
+.banner {
+    height: 500px;
+    //background-color: orange;
+    background-image: url("../../../assets/fondo_IA.jpg"); //<a href="https://www.freepik.es/foto-gratis/selva-fondo-bosque-naturaleza-escena-futurista-generativo-ai_39671175.htm#&position=8&from_view=search">Imagen de tohamina</a> en Freepik
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+
+
+    .container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    h1 {
+        color: white;
+        font-size: 60px;
+        line-height: 55px;
+        z-index: 1;
+    }
+
+    h2 {
+        color: white;
+        font-weight: 100;
+        //font-size: 60px;
+        line-height: 22px;
+        z-index: 1;
+    }
+}
