@@ -1,12 +1,12 @@
 @import "../../scss/index.scss";
 .client-layout{
-    background-color: $color1;
+    background-color: $bg-color;
 
 
     &__footer{
         margin-top: 50px;
         padding: 20px 0px 10px 0px;
-        border-top: 3px solid $color2;
+        border-top: 3px solid $primary-color;
 
         >.ui.container{
             display: flex;
@@ -14,7 +14,7 @@
             &:last-of-type{
                 justify-content: space-between;
                 margin-top: 30px;
-                color: $color3;
+                color: $secondary-color;
                 font-size: 12;
             }
         }
