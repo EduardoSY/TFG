@@ -1,27 +1,42 @@
-@import "../../../scss/index.scss";
+@import "~/src/scss/index.scss";
 
 .top-bar {
-    height: 60px;
-    background-color: red;
-    
-    > .ui.container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+  height: 60px;
+  //background-color: $background-marvel-red;
+  //background-color: rgb(237, 29, 36);
+  border-bottom: 2px solid $tertiary-color;
+
+  > .ui.container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    //Con lo de arriba centre el div en la posi correcta.
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  &__centrado {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //justify-content: space-between;
+    //background-color: aquamarine;
+
+    .logo {
+      height: 100%;
+      > svg {
         height: 100%;
+        width: 100%;
+      }
+      //background-color: blue;
     }
-
-    &_left {
-        height: 100%;
-        display: flex;
-        align-items: center;
-
-        .logo{
-            height: 60%;
-
-            >svg {
-                height: 100%;
-            }
-        }
+    .text {
+      margin: 0 15px;
+      font-size: 35px;
+      font-family: fantasy;
+      padding: 0.4em;
+      color: $tertiary-color
     }
+  }
 }
