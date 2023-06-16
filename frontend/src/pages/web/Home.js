@@ -5,8 +5,8 @@ import {
   BasicModal,
   FormularioModal,
   FormularioModalStreaming,
-  ListSubtitles
 } from "../../components/Web";
+import { ListSubtitles } from "../../components/Web/Subtitles";
 import videojs from "video.js";
 import { Button } from "semantic-ui-react";
 import "./Home.scss";
