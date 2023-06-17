@@ -18,6 +18,6 @@ const api = express.Router();
 //       }
 //   });
 
-api.get('/vttfiles', VTTFilesController.get_transcription_files);
+api.get('/vttfiles/:id', VTTFilesController.get_transcription_files);
 
   module.exports = api;

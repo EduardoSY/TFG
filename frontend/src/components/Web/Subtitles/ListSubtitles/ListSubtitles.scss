@@ -1,6 +1,6 @@
 @import "~/src/scss/index.scss";
 
-.list-post-web {
+.list-subtitles-web {
     margin-top: 70px;
 
     .list {
@@ -12,22 +12,4 @@
             padding: 20px;
         }
     }
-
-    .pagination {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-
-        a {
-            color: white !important;
-            opacity: 0.6;
-
-            &.active{
-                opacity: 1;
-                border-color: aqua;
-            }
-        }
-    }
-
-
 }

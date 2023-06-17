@@ -6,13 +6,13 @@ export class Subtitles {
     async getSubtitles(id_subtitles) {
         console.log("FUNCION LLAMADA");
         try {
-          const url = `${this.baseApi}/${ENV.API_ROUTES.SUBTITLES}`;
+          const url = `${this.baseApi}/${ENV.API_ROUTES.SUBTITLES}/${id_subtitles}`;
+          console.log(url);
           const params = {
             method: "GET",
             headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ id: id_subtitles}) // Aquí se incluye el ID en el cuerpo de la solicitud
+              'Content-Type':'application/json',
+            },
           };
     
           const response = await fetch(url, params);

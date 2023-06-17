@@ -21,6 +21,7 @@ export function Home() {
     controls: true,
     responsive: true,
     fluid: true,
+    preload: 'none',
     sources: [
       {
         //src: 'http://127.0.0.1:8887/Muito_ArmaCSGO_Esp.mp4',
@@ -52,6 +53,15 @@ export function Home() {
 
   const handlePlayerReady = (player) => {
     playerRef.current = player;
+
+    const track = player.addRemoteTextTrack({
+      kind: 'captions',
+      label: 'Subtitles',
+      src: 'http://127.0.0.1:8887/video-1687037613631.mp4.vtt',
+      srclang: 'es' // Idioma de los subtítulos (código ISO 639-1)
+    }, false);
+
+    track.mode = 'showing';
 
     // You can handle player events here, for example:
     player.on("waiting", () => {

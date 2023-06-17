@@ -8,7 +8,7 @@ const { resourceLimits } = require("worker_threads");
 
 async function get_transcription_files (req, res) {
     //const transcriptionId = req.params.id;
-    const {id} = req.body;
+    const {id} = req.params;
     const transcriptionId = id;
     // Directorio donde se almacenan los archivos de transcripción
     //const directoryPath = path.join(__dirname, 'uploads', transcriptionId);

@@ -1,0 +1,48 @@
+.subtitles-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e4e4d4;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  
+    &:nth-last-of-type(2) {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  
+    &__info {
+      display: flex;
+      flex-direction: column;
+      //background-color: orange;
+      backdrop-filter: blur(2px) brightness(90%);
+      color: white;
+      &-title {
+        font-weight: bold;
+        font-size: 22px;
+        text-shadow: rgb(0, 0, 0) 5px 0 10px;
+        margin-bottom: 10px;
+      }
+  
+      &-publish {
+        opacity: 0.8;
+      }
+    }
+  }
+  
+  h2 {
+    font-size: 16px;
+    margin: 10px 0 0 0;
+    font-weight: normal;
+  }
+  
+  .post-item__html {
+    //background-color: aqua;
+    padding: 5px 10px;
+    margin: 5px 0px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    color: black;
+    background-color: hsla(0, 0%, 100%, 0.8);
+    border-radius: 5px;
+  }
