@@ -4,4 +4,6 @@ export * from "./VideoJS";
 export * from "./BasicModal";
 export * from "./FormularioModal";
 export * from "./FormularioModalStreaming";
+export * from "./FormularioModalTraduccion";
+export * from "./FormularioTraduccion";
 //export * from "./ListSubtitles";

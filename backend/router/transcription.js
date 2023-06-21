@@ -23,7 +23,7 @@ api.post('/transcrip/speechtext', upload.single("video"), (req, res) => {
   const video = req.file;
   console.log(video);
   const basename = path.basename(req.file.path.replace(/\\/g, "/"));
-  TranscriptionController.request_transcription(req.file.path)
+  //TranscriptionController.request_transcription(req.file.path)
   // Aquí puedes procesar el archivo de video recibido
   res.status(200).send(basename);
   //Devolver aquí el nombre del video asignado

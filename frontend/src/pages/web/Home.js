@@ -5,6 +5,7 @@ import {
   BasicModal,
   FormularioModal,
   FormularioModalStreaming,
+  FormularioTraduccion
 } from "../../components/Web";
 import { ListSubtitles } from "../../components/Web/Subtitles";
 import videojs from "video.js";
@@ -119,7 +120,7 @@ export function Home() {
       >
         <FormularioModalStreaming setVideoUrl={setVideoUrl} />
       </BasicModal>
-
+      <FormularioTraduccion />
       <ListSubtitles />
     </div>
   );
