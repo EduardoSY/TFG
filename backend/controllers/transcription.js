@@ -59,9 +59,12 @@ async function get_result_transcription(config){
   return resultado;
 }
 
-async function request_transcription(video_path){
+async function request_transcription(video_path, token){
     console.log("Se ha llamado a la funcion");
-    console.log(video_path)
+    console.log(video_path);
+    //console.log(path.join(path.dirname(video_path), path.basename(video_path, path.extname(video_path)) + '.vtt'););
+    const newFilePath = path.join(path.dirname(video_path), path.basename(video_path, path.extname(video_path)) + '_original.vtt'); 
+    console.log(newFilePath);  
     const video = fs.readFileSync(video_path, (err, data) => {
         if (err) {
           console.error(err);
@@ -90,8 +93,7 @@ async function request_transcription(video_path){
     const resultado_final = await get_result_transcription(response_config);
     const resultado_formateado  = JSON.parse(resultado_final);
   
-    fs.writeFileSync( video_path + ".vtt", resultado_formateado);
-
+    fs.writeFileSync( newFilePath, resultado_formateado);
     // const formData = new FormData();
     // formData.append('post-body', video);
     // const response = await axios.post('https://api.speechtext.ai/recognize?key=4374fd964d4a4a4a9fb30b388947f162', formData, {

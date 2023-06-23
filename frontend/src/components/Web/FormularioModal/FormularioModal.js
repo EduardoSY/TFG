@@ -1,8 +1,12 @@
 import React, {useState}from 'react';
 import axios from 'axios';
 import { Form, Dropdown, Button} from 'semantic-ui-react';
+import { Subtitles } from '../../../api/subtitles';
 
-export function FormularioModal({ setVideoUrl }) {
+const subtitlesController = new Subtitles();
+
+
+export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles}) {
 
     const options = [
         { key: 'es', text: 'Español', value: 'Español' },
@@ -28,9 +32,15 @@ export function FormularioModal({ setVideoUrl }) {
       },
     });
 
+    console.log("APERRO SANCHEZ");
     console.log(response.data);
-    const new_video_path = "http://127.0.0.1:8887/" + response.data;
+    subtitlesController.setAccessToken(response.data.uniqueId);
+
+    console.log("FORM MODAL DATA REPSONSE");
+    console.log(response.data.uniqueId);
+    const new_video_path = "http://127.0.0.1:8887/" + response.data.uniqueId +"."+response.data.extension ;
     setVideoUrl(new_video_path);
+    setShouldRefreshSubtitles(true);
     
 
   };

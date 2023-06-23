@@ -17,6 +17,7 @@ export function Home() {
   const [showModalStream, setShowModalStream] = useState(false);
   const [reload, setReload] = useState(false);
   const [subtitleUrl, setSubtitleUrl] = useState(null);
+  const [shouldRefreshSubtitles, setShouldRefreshSubtitles] = useState(false);
   const [videoJsOptions, setVideoJsOptions] = useState({
     autoplay: false,
     controls: true,
@@ -75,6 +76,8 @@ export function Home() {
   };
 
   const setVideoUrl = (url) => {
+    console.log("ONICHAN");
+    console.log(url);
     setVideoJsOptions((prevOptions) => ({
       ...prevOptions,
       sources: [
@@ -110,7 +113,7 @@ export function Home() {
         close={onOpenCloseModalLocal}
         title="Cargar video"
       >
-        <FormularioModal setVideoUrl={setVideoUrl} />
+        <FormularioModal setVideoUrl={setVideoUrl} setShouldRefreshSubtitles={setShouldRefreshSubtitles}/>
       </BasicModal>
 
       <BasicModal
@@ -121,7 +124,7 @@ export function Home() {
         <FormularioModalStreaming setVideoUrl={setVideoUrl} />
       </BasicModal>
       <FormularioTraduccion />
-      <ListSubtitles />
+      <ListSubtitles shouldRefreshSubtitles={shouldRefreshSubtitles} setShouldRefreshSubtitles={setShouldRefreshSubtitles}/>
     </div>
   );
 }

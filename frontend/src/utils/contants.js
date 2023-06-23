@@ -6,5 +6,8 @@ export const ENV = {
   BASE_API: `http://${SERVER_IP}/api/${API_VERSION}`,
   API_ROUTES: {
     SUBTITLES: "vttfiles",
+    TRANLATION_OPTIONS: "traslate/available_languages",
+    REQUEST_TRANSLATION: "traslate/request_translation"
+
   }
 }

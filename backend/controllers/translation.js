@@ -28,6 +28,16 @@ async function getTranslationLanguages (req, res) {
       }
 };
 
+async function requestTranslation(req, res){
+    console.log("HE RECIBIDO UNA REQUEST PARA TRADUCIR");
+    const vttpath = `original-`
+    const vttContent = fs.readFileSync('ruta/al/archivo.vtt', 'utf-8');
+  //console.log(req.body);
+  const { token, selectedLanguage} = req.body;
+  console.log(selectedLanguage);
+}
+
 module.exports = {
     getTranslationLanguages,
+    requestTranslation
   };

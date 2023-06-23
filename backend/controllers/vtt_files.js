@@ -25,18 +25,22 @@ async function get_transcription_files (req, res) {
           console.log("marico");
         } else {
           // Crea un arreglo para almacenar la información de cada archivo
+          
+          const regex = /_(.*?)\.vtt/;
+          
           const fileData = [];
   
           // Itera sobre los archivos y obtén la información relevante
           files.forEach((file) => {
             const filePath = path.join(directoryPath, file);
             const fileStats = fs.statSync(filePath);
-  
+            const match = regex.exec(file);
+          
             if (file.includes(transcriptionId) && file.endsWith('.vtt')){
                 fileData.push({
                     filename: file,
-                    size: fileStats.size,
-                    lastModified: fileStats.mtime,
+                    filepath: filePath,
+                    language: match[1]
                   });
                  debug_count = debug_count + 1;
             }

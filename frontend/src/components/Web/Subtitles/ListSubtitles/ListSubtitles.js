@@ -8,25 +8,32 @@ import {map, size} from "lodash";
 
 const subtitlesController = new Subtitles();
 
-export function ListSubtitles() {
+export function ListSubtitles({ shouldRefreshSubtitles, setShouldRefreshSubtitles }) {
   const [subtitles, setSubtitles] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   //console.log(subtitles.files);
 
   useEffect(() => {
+    if (shouldRefreshSubtitles) {
     (async() => {
       try{
-        const response = await subtitlesController.getSubtitles(1686582745966);
+        const token = sessionStorage.getItem('token');
+        const response = await subtitlesController.getSubtitles(token);
         setSubtitles(response);
+        setShouldRefreshSubtitles(false);
       } catch (error) {
         console.log(error);
       }
-    })()
-  }, []);
+    })();
+  }
+  }, [shouldRefreshSubtitles]);
 
-  if(!subtitles) return <Loader active inline="centered" />;
-  if(size(subtitles) === 0) return "No hay transcripciones";
+  if (!subtitles && isLoading) return <Loader active inline="centered" />;
+  if (!subtitles && !isLoading) return "No hay transcripciones";
+
   
-  console.log(subtitles.files[0].filename);
+  console.log(subtitles);
 
   return (
     <div className='list-subtitles-web'>

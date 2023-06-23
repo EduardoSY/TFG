@@ -25,5 +25,9 @@ export class Subtitles {
           throw error;
         }
       }
+
+      setAccessToken(token) {
+        sessionStorage.setItem("token", token);
+      }
     
 }
