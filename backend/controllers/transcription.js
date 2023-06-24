@@ -5,6 +5,8 @@ const path = require("path");
 const { URLSearchParams } = require("url");
 const { url } = require("inspector");
 const { resourceLimits } = require("worker_threads");
+const { UPLOADS_PATH } = require("../constants");
+
 
 const upload = multer();
 
@@ -94,21 +96,36 @@ async function request_transcription(video_path, token){
     const resultado_formateado  = JSON.parse(resultado_final);
   
     fs.writeFileSync( newFilePath, resultado_formateado);
-    // const formData = new FormData();
-    // formData.append('post-body', video);
-    // const response = await axios.post('https://api.speechtext.ai/recognize?key=4374fd964d4a4a4a9fb30b388947f162', formData, {
-    //     headers: {
-    //       'Content-Type': 'application/octet-stream'
-    //     }
-    // });
-    
-    //return response.data;
+}
 
-    
+//Funcion para obtener desde google drive
+async function request_transcription_url(video_path, token){
+  console.log("Se ha llamado a la funcion google drive");
+  console.log(video_path);
+  //console.log(path.join(path.dirname(video_path), path.basename(video_path, path.extname(video_path)) + '.vtt'););
+  const newFilePath = path.join(UPLOADS_PATH, token + '_original.vtt'); 
+  console.log(newFilePath);  
+     const response = await axios.get(`https://api.speechtext.ai/recognize?key=4374fd964d4a4a4a9fb30b388947f162&url=${video_path}&language=es-ES`);
 
-    //res.status(200).send({msg: "LLAMADA"});
+       console.log(response.data);
+
+  
+//LIMPIAR ESTO Y PONERLO MAS GENERAL
+    const response_config = {
+    "task": response.data.id,
+    "key": "4374fd964d4a4a4a9fb30b388947f162",
+    "max_caption_words": 15
+  };
+
+
+   console.log("Transcipcion INICIADA");
+   const resultado_final = await get_result_transcription(response_config);
+   const resultado_formateado  = JSON.parse(resultado_final);
+
+   fs.writeFileSync( newFilePath, resultado_formateado);
 }
 
 module.exports = {
     request_transcription,
+    request_transcription_url
 };

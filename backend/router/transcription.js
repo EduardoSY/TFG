@@ -42,4 +42,27 @@ api.post('/transcrip/speechtext', upload.single("video"), (req, res) => {
   //Devolver aquí el nombre del video asignado
 });
 
+
+api.post('/transcrip/speechtext/url', (req, res) => {
+  console.log("ESTO ES URL");
+  uniqueId = uuidv4();
+  console.log(req.body);
+  const streamingurl = req.body.videoUrlstate;
+  console.log(`El identificador unico es: ${uniqueId}`);
+  TranscriptionController.request_transcription_url(streamingurl, uniqueId);
+  const start = streamingurl.indexOf('/d/') + 3;
+  const end = streamingurl.indexOf('/', start);
+  const id = streamingurl.substring(start, end);
+  const newurl = `https://drive.google.com/uc?id=${id}&export=download`
+  const response = {
+    uniqueId: uniqueId,
+    newURL: newurl
+  };
+
+  //res.status(200).send(uniqueId);
+  res.status(200).json(response);
+  
+  //Devolver aquí el nombre del video asignado
+});
+
 module.exports = api;

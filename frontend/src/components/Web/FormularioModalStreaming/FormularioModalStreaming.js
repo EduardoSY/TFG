@@ -1,8 +1,12 @@
 import React, {useState}from 'react';
 import axios from 'axios';
 import { Form, Dropdown, Button} from 'semantic-ui-react';
+import { Subtitles } from '../../../api/subtitles';
 
-export function FormularioModalStreaming({ setVideoUrlStreaming }) {
+const subtitlesController = new Subtitles();
+
+export function FormularioModalStreaming({ setVideoUrl }) {
+    const [videoUrlstate, setVideoUrlstate] = useState('');
 
     const options = [
         { key: 'es', text: 'Español', value: 'Español' },
@@ -13,24 +17,18 @@ export function FormularioModalStreaming({ setVideoUrlStreaming }) {
 
         const [URL, setURL] = useState(null);
 
-  const handleChange = (event) => {
-    setURL(event.target.files[0]);
-  };
+        const handleInputChange = (event) => {
+          setVideoUrlstate(event.target.value);
+        };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData();
-    //formData.append('video', file);
 
-    const response = await axios.post('http://localhost:3977/api/v1/transcrip/speechtext', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-    });
 
+    const response = await axios.post('http://localhost:3977/api/v1/transcrip/speechtext/url', { videoUrlstate });
+    subtitlesController.setAccessToken(response.data.uniqueId);
     console.log(response.data);
-    const new_video_path = "http://127.0.0.1:8887/" + response.data;
-    setVideoUrlStreaming(new_video_path);
+    setVideoUrl(response.data.newURL);
     
 
   };
@@ -38,7 +36,7 @@ export function FormularioModalStreaming({ setVideoUrlStreaming }) {
     <Form>
         <Form.Field>
         <label>URL del video</label>
-        <Form.Input name="file" type="input" placeholder="Fichero" onChange={handleChange}/>
+        <input placeholder='URL' value={videoUrlstate} onChange={handleInputChange}/>
       </Form.Field>
       <Button type='submit' onClick={handleSubmit}>Submit</Button>
     </Form>
