@@ -59,7 +59,7 @@ export function Home() {
     const track = player.addRemoteTextTrack({
       kind: 'captions',
       label: 'Subtitles',
-      src: 'http://127.0.0.1:8887/video-1687037613631.mp4.vtt',
+      src: `http://127.0.0.1:8887/${sessionStorage.getItem('token')}_original.vtt`,
       srclang: 'es' // Idioma de los subtítulos (código ISO 639-1)
     }, false);
 
