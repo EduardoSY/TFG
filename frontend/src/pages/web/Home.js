@@ -18,6 +18,13 @@ export function Home() {
   const [reload, setReload] = useState(false);
   const [subtitleUrl, setSubtitleUrl] = useState(null);
   const [shouldRefreshSubtitles, setShouldRefreshSubtitles] = useState(false);
+  const [allSubtitles, setAllSubtitles] = useState([]);
+
+  const [urlvideo, setURLvideo] = useState(null);
+
+  const [shouldReloadPlayer, setShouldReloadPlayer] = useState(false);
+
+
   const [videoJsOptions, setVideoJsOptions] = useState({
     autoplay: false,
     controls: true,
@@ -56,14 +63,31 @@ export function Home() {
   const handlePlayerReady = (player) => {
     playerRef.current = player;
 
-    const track = player.addRemoteTextTrack({
-      kind: 'captions',
-      label: 'Subtitles',
-      src: `http://127.0.0.1:8887/${sessionStorage.getItem('token')}_original.vtt`,
-      srclang: 'es' // Idioma de los subtítulos (código ISO 639-1)
-    }, false);
+    //const track = player.addRemoteTextTrack({
+    //   kind: 'captions',
+    //   label: 'Subtitles',
+    //   src: `http://127.0.0.1:8887/${sessionStorage.getItem('token')}_original.vtt`,
+    //   srclang: 'es' // Idioma de los subtítulos (código ISO 639-1)
+    // }, false);
 
-    track.mode = 'showing';
+    //track.mode = 'showing';
+    console.log("CARGAMOS LOS SUBTITULOS");
+    console.log(allSubtitles);
+
+    allSubtitles.forEach((subtitle) => {
+      console.log(subtitle);
+      player.addRemoteTextTrack(subtitle, false);
+    });
+    //   const track1 = player.addRemoteTextTrack({
+    //     kind: 'captions',
+    //     label: 'Espain',
+    //     src: 'http://127.0.0.1:8887/d62fdb6f-efd7-4caa-8c50-08da1ead76aa_original.vtt',
+    //     srclang: 'en'
+    // }, false);
+      //track1.mode = 'showing';
+  
+      //track2.mode = 'showing';
+    //});
 
     // You can handle player events here, for example:
     player.on("waiting", () => {
@@ -73,10 +97,31 @@ export function Home() {
     player.on("dispose", () => {
       videojs.log("player will dispose");
     });
+
+    //var tracks = player.textTracks();
+    //console.log("ESTOS SON LOS TRAKOS");
+    //console.log(tracks);
+
   };
 
   const setVideoUrl = (url) => {
     console.log("ONICHAN");
+    console.log(url);
+    setURLvideo(url);
+    setVideoJsOptions((prevOptions) => ({
+      ...prevOptions,
+      sources: [
+        {
+          src: url,
+          type: "video/mp4",
+        },
+      ],
+    }));
+  };
+
+
+  const setVideoUrl2 = (url) => {
+    console.log("ONICHAN2");
     console.log(url);
     setVideoJsOptions((prevOptions) => ({
       ...prevOptions,
@@ -89,7 +134,42 @@ export function Home() {
     }));
   };
 
+
+  const setSubtitlesVideo = (subtitulos) => {
+    console.log("Cambio En Subtitulos");
+    console.log(subtitulos);
+    const subtitleItems = [];
+    subtitulos.files.forEach((sub) => {
+      let path = `http://127.0.0.1:8887/${sub.filename}`
+      subtitleItems.push({
+        kind: 'captions',
+        label: sub.language,
+        src: path, // Ajusta la ruta del archivo de subtítulos según sea necesario
+        srclang: sub.language.substring(0, 2).toLowerCase() // Ajusta el campo del idioma según corresponda en tus datos de subtítulos
+      });
+    });
+    
+    console.log("Cambio En Subtitulos 123");
+    //setVideoUrl(urlvideo);
+    console.log(subtitleItems);
+  //   player.addRemoteTextTrack({
+  //     kind: 'captions',
+  //     label: 'Ingles',
+  //     src: 'http://127.0.0.1:8887/d62fdb6f-efd7-4caa-8c50-08da1ead76aa_EN-US.vtt',
+  //     srclang: 'en'
+  // }, false);
+
+    setAllSubtitles(subtitleItems);
+    //playerRef.current.trigger('loadstart');
+  };
+
   console.log(videoJsOptions.sources[0].src);
+
+  const handlePlayerReset = () => {
+    if (playerRef.current) {
+      playerRef.current.load();
+    }
+  };
 
   return (
     <div>
@@ -106,6 +186,8 @@ export function Home() {
       <p>Video URL: {videoJsOptions.sources[0].src}</p>
       <div className="video-container">
         <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+        <Button onClick={handlePlayerReset}>Reiniciar reproductor</Button>
+
       </div>
 
       <BasicModal
@@ -124,7 +206,12 @@ export function Home() {
         <FormularioModalStreaming setVideoUrl={setVideoUrl} />
       </BasicModal>
       <FormularioTraduccion />
-      <ListSubtitles shouldRefreshSubtitles={shouldRefreshSubtitles} setShouldRefreshSubtitles={setShouldRefreshSubtitles}/>
+      <ListSubtitles shouldRefreshSubtitles={shouldRefreshSubtitles} setShouldRefreshSubtitles={setShouldRefreshSubtitles}
+      setSubtitlesVideo={setSubtitlesVideo} setShouldReloadPlayer={setShouldReloadPlayer}/>
     </div>
   );
 }
+
+
+
+

@@ -35,39 +35,34 @@ async function getTranslationLanguages (req, res) {
 
 async function requestTranslation(req, res){
     console.log("HE RECIBIDO UNA REQUEST PARA TRADUCIR");
-  const { token, selectedLanguage} = req.body;
-    
+    const { token, selectedLanguage} = req.body;
+    //const token = "8bd2c4e2-f12e-4d08-9e2f-7175892787c7"
+    console.log(token);
+    console.log(selectedLanguage);
+
     const vttFile = UPLOADS_PATH + `/${token}_original.vtt`;
     console.log(vttFile);
-    
-
     const vttContent = fs.readFileSync(vttFile, 'utf8');
+    console.log(vttContent)
+    const translationResult = await translator.translateText(vttContent, null, selectedLanguage);
+    console.log(translationResult.text); // 'Bonjour, le monde !'
 
-    // Eliminar los metadatos del archivo .vtt para obtener solo el texto
-    const txtContent = vttContent.replace(/(\d+:\d+:\d+\.\d+ --> \d+:\d+:\d+\.\d+)\s+.*\n/g, '');
+    const translatedText = translationResult.text; // Texto traducido
 
-    // Guardar el contenido en un archivo .txt
-    const txtFilePath = vttFilePath.replace('.vtt', '.txt');
-    fs.writeFileSync(txtFilePath, txtContent, 'utf8');
+// Ruta y nombre del archivo de salida
+const translatedVttFile = UPLOADS_PATH + `/${token}_${selectedLanguage}.vtt`;
 
-    // Crear instancia de FormData y agregar los campos necesarios
-    const formData = new FormData();
-    formData.append('target_lang', targetLanguage);
-    formData.append('file', fs.createReadStream(txtFilePath));
+fs.writeFile(translatedVttFile, translatedText, 'utf8', (err) => {
+  if (err) {
+    console.error('Error al guardar el archivo traducido:', err);
+    res.status(400).send({msg: `Error al guardar el archivo traducido`});
+    return;
+  }
 
-    // Configurar los encabezados de la solicitud
-    formData.append('auth_key', apiKey);
-    formData.append('source_lang', sourceLanguage);
-
-
-    const data = {
-      auth_key: DEEPL_APIKEY,
-      text: vttContent,
-      target_lang: selectedLanguage
-    };
-  //console.log(req.body);
-  console.log(token);
-  console.log(selectedLanguage);
+  console.log('Archivo traducido guardado exitosamente:', translatedVttFile);
+  res.status(200);
+});
+    
 }
 
 module.exports = {

@@ -8,13 +8,12 @@ import {map, size} from "lodash";
 
 const subtitlesController = new Subtitles();
 
-export function ListSubtitles({ shouldRefreshSubtitles, setShouldRefreshSubtitles }) {
+export function ListSubtitles({ shouldRefreshSubtitles, setShouldRefreshSubtitles, setSubtitlesVideo, setShouldReloadPlayer}) {
   const [subtitles, setSubtitles] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [reaload, isRealoading] = useState(true);
   const [reload, setReload] = useState(false);
   const onReload = () => setReload((prevState) => !prevState);
-
   //console.log(subtitles.files);
 
   useEffect(() => {
@@ -27,6 +26,7 @@ export function ListSubtitles({ shouldRefreshSubtitles, setShouldRefreshSubtitle
         console.log(token);
         const response = await subtitlesController.getSubtitles(token);
         setSubtitles(response);
+        setSubtitlesVideo(response);
         setShouldRefreshSubtitles(false);
       } catch (error) {
         console.log(error);
