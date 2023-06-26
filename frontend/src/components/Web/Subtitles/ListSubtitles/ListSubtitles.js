@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react';
 import "./ListSubtitles.scss";
 import { Subtitles } from '../../../../api/subtitles';
 import { ListSubtitlesItem } from '../ListSubtitlesItem';
-import { Loader, Button} from "semantic-ui-react";
+import { Loader, Button, Divider} from "semantic-ui-react";
 import {map, size} from "lodash";
 //import { post } from '../../../../../../backend/app';
 
@@ -44,13 +44,14 @@ export function ListSubtitles({ shouldRefreshSubtitles, setShouldRefreshSubtitle
 
   return (
     <div className='list-subtitles-web'>
-      <h2>LDS</h2>
+      <h2>Listado de subtítulos generados</h2>
       <Button primary onClick={onReload}>
           Recarga
         </Button>
+        <Divider/>
         <div className='list'>
         {map(subtitles.files, (sub) => (
-          <div key={sub.filename} className=''>
+          <div key={sub.filename} className='item'>
             <ListSubtitlesItem subtitle={sub} />
           </div>
         ))}

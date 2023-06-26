@@ -1,6 +1,7 @@
 
 .video-container {
     padding: 10px 100px;
+    background-color: bisque;
     //width: 640px; /* ancho */
     //height: 360px; /* alto */   
 }
@@ -10,4 +11,9 @@
     justify-content: center; /* centra horizontalmente los elementos */
     align-items: center; /* centra verticalmente los elementos */
     padding-top: 20px;
+}
+
+.subtitles-container{
+    background-color: aqua;
+    padding: 10px 100px;
 }

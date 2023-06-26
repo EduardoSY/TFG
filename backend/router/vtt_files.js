@@ -19,5 +19,6 @@ const api = express.Router();
 //   });
 
 api.get('/vttfiles/:id', VTTFilesController.get_transcription_files);
+api.get('/vttfiles/download/:file', VTTFilesController.downloadVTTFile);
 
   module.exports = api;

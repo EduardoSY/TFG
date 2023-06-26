@@ -9,7 +9,7 @@ import {
 } from "../../components/Web";
 import { ListSubtitles } from "../../components/Web/Subtitles";
 import videojs from "video.js";
-import { Button } from "semantic-ui-react";
+import { Button, Container, Divider } from "semantic-ui-react";
 import "./Home.scss";
 
 export function Home() {
@@ -189,7 +189,7 @@ export function Home() {
         <Button onClick={handlePlayerReset}>Reiniciar reproductor</Button>
 
       </div>
-
+      
       <BasicModal
         show={showModalLocal}
         close={onOpenCloseModalLocal}
@@ -205,9 +205,13 @@ export function Home() {
       >
         <FormularioModalStreaming setVideoUrl={setVideoUrl} />
       </BasicModal>
+      <div className="subtitles-container">
       <FormularioTraduccion />
-      <ListSubtitles shouldRefreshSubtitles={shouldRefreshSubtitles} setShouldRefreshSubtitles={setShouldRefreshSubtitles}
-      setSubtitlesVideo={setSubtitlesVideo} setShouldReloadPlayer={setShouldReloadPlayer}/>
+      
+        <ListSubtitles shouldRefreshSubtitles={shouldRefreshSubtitles} setShouldRefreshSubtitles={setShouldRefreshSubtitles}
+        setSubtitlesVideo={setSubtitlesVideo} setShouldReloadPlayer={setShouldReloadPlayer}/>
+      </div>
+      
     </div>
   );
 }

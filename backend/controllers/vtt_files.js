@@ -5,6 +5,9 @@ const path = require("path");
 const { URLSearchParams } = require("url");
 const { url } = require("inspector");
 const { resourceLimits } = require("worker_threads");
+const {UPLOADS_PATH} = require("../constants");
+const { uptime } = require("process");
+
 
 async function get_transcription_files (req, res) {
     //const transcriptionId = req.params.id;
@@ -78,6 +81,24 @@ async function getVTTFiles(req, res) {
       }
   }
 
+
+function downloadVTTFile(req, res){
+  const {file} = req.params;
+  console.log(file);
+  const vttFilePath = UPLOADS_PATH + "/" + file;
+
+  res.download(vttFilePath, file, (err) => {
+    if (err) {
+      // Manejo del error
+      console.error(err);
+      res.status(500).send('Error al descargar el archivo');
+    }
+  });
+  //res.status(200).send({msg: "Correcto hasta aqui"});
+
+}
+
 module.exports = {
     get_transcription_files,
+    downloadVTTFile
 };
