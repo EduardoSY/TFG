@@ -96,7 +96,7 @@ function downloadVTTFile(req, res) {
       res.status(500).send("Error al descargar el archivo");
     }
   });
-  res.status(200).send("Fichero descargado correctamente");
+  //res.status(200).send("Fichero descargado correctamente");
 }
 
 module.exports = {
