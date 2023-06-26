@@ -3,8 +3,8 @@ const SERVER_IP = "exampleback.onrender.com";
 
 const API_VERSION = "v1";
 export const ENV = {
-  BASE_PATH: `http://${SERVER_IP}`,
-  BASE_API: `http://${SERVER_IP}/api/${API_VERSION}`,
+  BASE_PATH: `https://${SERVER_IP}`,
+  BASE_API: `https://${SERVER_IP}/api/${API_VERSION}`,
   API_ROUTES: {
     SUBTITLES: "vttfiles",
     TRANLATION_OPTIONS: "traslate/available_languages",
