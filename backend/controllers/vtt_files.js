@@ -15,7 +15,9 @@ async function get_transcription_files (req, res) {
     const transcriptionId = id;
     // Directorio donde se almacenan los archivos de transcripción
     //const directoryPath = path.join(__dirname, 'uploads', transcriptionId);
-    const directoryPath = GENERAL_PATH + UPLOADS_PATH;
+    //const directoryPath = GENERAL_PATH + UPLOADS_PATH;
+    const directoryPath = path.join(__dirname, '../uploads');
+    
     console.log(directoryPath);
     let debug_count = 0;
   
