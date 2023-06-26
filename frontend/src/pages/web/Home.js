@@ -11,6 +11,7 @@ import { ListSubtitles } from "../../components/Web/Subtitles";
 import videojs from "video.js";
 import { Button, Container, Divider } from "semantic-ui-react";
 import "./Home.scss";
+import { ENV } from "../../utils";
 
 export function Home() {
   const [showModalLocal, setShowModalLocal] = useState(false);
@@ -140,7 +141,9 @@ export function Home() {
     console.log(subtitulos);
     const subtitleItems = [];
     subtitulos.files.forEach((sub) => {
-      let path = `http://localhost:3977/api/v1/stream/video/${sub.filename}`
+      //let path = `http://localhost:3977/api/v1/stream/video/${sub.filename}`
+      let path = ENV.BASE_API+"/"+ENV.API_ROUTES.STREAM_DATA + "/" + sub.filename;
+      
       console.log(path);
       subtitleItems.push({
         kind: 'captions',

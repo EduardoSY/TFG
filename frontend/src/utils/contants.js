@@ -8,6 +8,8 @@ export const ENV = {
     SUBTITLES: "vttfiles",
     TRANLATION_OPTIONS: "traslate/available_languages",
     REQUEST_TRANSLATION: "traslate/request_translation",
-    DOWNLOAD_VTT: "vttfiles/download"
+    DOWNLOAD_VTT: "vttfiles/download",
+    STREAM_DATA: "stream/video",
+    TRANSCRIPTION: "transcrip/speechtext"
   }
 }

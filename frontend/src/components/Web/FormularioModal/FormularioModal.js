@@ -2,6 +2,7 @@ import React, {useState}from 'react';
 import axios from 'axios';
 import { Form, Dropdown, Button} from 'semantic-ui-react';
 import { Subtitles } from '../../../api/subtitles';
+import { ENV } from "../../../utils";
 
 const subtitlesController = new Subtitles();
 
@@ -26,7 +27,7 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles}) {
     const formData = new FormData();
     formData.append('video', file);
 
-    const response = await axios.post('http://localhost:3977/api/v1/transcrip/speechtext', formData, {
+    const response = await axios.post(ENV.BASE_API+"/"+ENV.API_ROUTES.TRANSCRIPTION, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       },
@@ -39,8 +40,12 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles}) {
     console.log("FORM MODAL DATA REPSONSE");
     console.log(response.data.uniqueId);
     //const new_video_path = "http://127.0.0.1:8887/" + response.data.uniqueId +"."+response.data.extension ;
-    const new_video_path = "http://localhost:3977/api/v1/stream/video/" + response.data.uniqueId +"."+response.data.extension ;
+    //const new_video_path = "http://localhost:3977/api/v1/stream/video/" + response.data.uniqueId +"."+response.data.extension ;
+    const new_video_path = ENV.BASE_API+ "/" + ENV.API_ROUTES.STREAM_DATA + "/" + response.data.uniqueId + "." + response.data.extension;
+    
     setVideoUrl(new_video_path);
+    console.log("NUEVA URL");
+    console.log(new_video_path);
     setShouldRefreshSubtitles(true);
     
 
