@@ -30,7 +30,7 @@ api.post('/transcrip/speechtext', upload.single("video"), (req, res) => {
   console.log(`El identificador unico es: ${uniqueId}`);
   //console.log(req.file.path);
   //const basename = path.basename(`${uniqueId}.mp4`.replace(/\\/g, "/"));
-  TranscriptionController.request_transcription(req.file.path, uniqueId);
+  //TranscriptionController.request_transcription(req.file.path, uniqueId);
   // Aquí puedes procesar el archivo de video recibido
   const response = {
     uniqueId: uniqueId,
