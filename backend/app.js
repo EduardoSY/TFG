@@ -10,6 +10,8 @@ const upload = multer();
 const transcriptionRoutes = require("./router/transcription");
 const vttFilesRoutes = require("./router/vtt_files");
 const translateRoutes = require("./router/translation");
+const streamRoutes = require("./router/stream_data");
+
 
 //Configure body parse
 //app.use(bodyParser.raw({type: 'application/octet-stream'}))
@@ -21,4 +23,6 @@ app.use(cors());
 app.use(`/api/${API_VERSION}`, transcriptionRoutes);
 app.use(`/api/${API_VERSION}`, vttFilesRoutes);
 app.use(`/api/${API_VERSION}`, translateRoutes);
+app.use(`/api/${API_VERSION}`, streamRoutes);
+
 module.exports = app;

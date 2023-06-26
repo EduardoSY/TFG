@@ -5,7 +5,7 @@ const path = require("path");
 const { URLSearchParams } = require("url");
 const { url } = require("inspector");
 const { resourceLimits } = require("worker_threads");
-const {UPLOADS_PATH} = require("../constants");
+const {UPLOADS_PATH, GENERAL_PATH} = require("../constants");
 const { uptime } = require("process");
 
 
@@ -15,7 +15,7 @@ async function get_transcription_files (req, res) {
     const transcriptionId = id;
     // Directorio donde se almacenan los archivos de transcripción
     //const directoryPath = path.join(__dirname, 'uploads', transcriptionId);
-    const directoryPath = "C://Users//EduardoSY//Desktop//TFG//Desarrollo_TFG//MiTFG//TFG//uploads";
+    const directoryPath = GENERAL_PATH + UPLOADS_PATH;
     console.log(directoryPath);
     let debug_count = 0;
   
@@ -85,7 +85,7 @@ async function getVTTFiles(req, res) {
 function downloadVTTFile(req, res){
   const {file} = req.params;
   console.log(file);
-  const vttFilePath = UPLOADS_PATH + "/" + file;
+  const vttFilePath = GENERAL_PATH + "/" + UPLOADS_PATH + "/" + file;
 
   res.download(vttFilePath, file, (err) => {
     if (err) {

@@ -140,7 +140,8 @@ export function Home() {
     console.log(subtitulos);
     const subtitleItems = [];
     subtitulos.files.forEach((sub) => {
-      let path = `http://127.0.0.1:8887/${sub.filename}`
+      let path = `http://localhost:3977/api/v1/stream/video/${sub.filename}`
+      console.log(path);
       subtitleItems.push({
         kind: 'captions',
         label: sub.language,

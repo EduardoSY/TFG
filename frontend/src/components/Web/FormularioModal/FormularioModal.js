@@ -38,7 +38,8 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles}) {
 
     console.log("FORM MODAL DATA REPSONSE");
     console.log(response.data.uniqueId);
-    const new_video_path = "http://127.0.0.1:8887/" + response.data.uniqueId +"."+response.data.extension ;
+    //const new_video_path = "http://127.0.0.1:8887/" + response.data.uniqueId +"."+response.data.extension ;
+    const new_video_path = "http://localhost:3977/api/v1/stream/video/" + response.data.uniqueId +"."+response.data.extension ;
     setVideoUrl(new_video_path);
     setShouldRefreshSubtitles(true);
     

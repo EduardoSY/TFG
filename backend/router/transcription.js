@@ -14,7 +14,7 @@ let uniqueId = null;
 // SET STORAGE
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, '../uploads');
+    cb(null, 'uploads');
   },
   filename: (req, file, cb) => {
     uniqueId = uuidv4();
