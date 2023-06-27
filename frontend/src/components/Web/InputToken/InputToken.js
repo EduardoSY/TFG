@@ -42,7 +42,7 @@ export function InputToken({ setVideoUrl, setShouldRefreshSubtitles }) {
           type="submit"
         >
           <Button.Content visible>
-            <Icon name="cloud download" /> Buscar
+            <Icon name="cloud download" /> Recuperar
           </Button.Content>
         </Button>
         {/* <Button className="custom-input-button_delete" onClick={handleDeleteData} type="submit">Delete</Button> */}

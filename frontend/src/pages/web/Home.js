@@ -111,7 +111,7 @@ export function Home() {
       console.log(path);
       subtitleItems.push({
         kind: "captions",
-        label: sub.language,
+        label: sub.language_full.toUpperCase(),
         src: path, // Ajusta la ruta del archivo de subtítulos según sea necesario
         srclang: sub.language.substring(0, 2).toLowerCase(), // Ajusta el campo del idioma según corresponda en tus datos de subtítulos
       });
@@ -146,8 +146,8 @@ export function Home() {
             Cargar video con enlace de Google Drive
           </Button>
         </div>
-        <h2 className="paso1-title">¿Ya has usado la aplicación? <br/> Utiliza el token que se generó en última sesión
-          y recupera tus datos. 
+        <h2 className="paso1-title">¿Ya has usado la aplicación? <br/> Utiliza el token que se generó en tu última sesión
+          y recupera o elimina tus datos.
         </h2>
         <div className="component-div">
           <InputToken
@@ -165,7 +165,7 @@ export function Home() {
       <BasicModal
         show={showModalLocal}
         close={onOpenCloseModalLocal}
-        title="Cargar video"
+        title="Cargar video desde tu dispositivo local"
       >
         <FormularioModal
           setVideoUrl={setVideoUrl}
@@ -176,13 +176,13 @@ export function Home() {
       <BasicModal
         show={showModalStream}
         close={onOpenCloseModalStream}
-        title="Cargar URL"
+        title="Cargar video con enlace de Google Drive"
       >
         <FormularioModalStreaming setVideoUrl={setVideoUrl} />
       </BasicModal>
       <div className="subtitles-container">
         <FormularioTraduccion />
-
+    <Divider/>
         <ListSubtitles
           shouldRefreshSubtitles={shouldRefreshSubtitles}
           setShouldRefreshSubtitles={setShouldRefreshSubtitles}

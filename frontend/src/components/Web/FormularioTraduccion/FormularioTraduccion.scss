@@ -1,0 +1,32 @@
+@import "../../../scss/index.scss";
+
+.titulo-traduccion {
+    margin: 0px 60px;
+    color: white;
+    font-size: 30px;
+    //font-family: Impact, fantasy;
+    text-align: center;
+    text-shadow: rgb(0, 0, 0) 0px 0 20px;
+  
+    font-weight: 100;
+}
+
+.ui.button.custom-button {
+    background-color: $secondary-color;
+    color: white;
+    transition-duration: 0.4s;
+    &:hover {
+      background-color: $tertiary-color;
+      color: white;
+    }
+    font-size: 20px;
+  }
+
+  .my-component {
+    opacity: 0;
+    transition: opacity 3s;
+  }
+
+  .my-component.show {
+    opacity: 1;
+  }

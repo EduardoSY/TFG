@@ -50,8 +50,12 @@
 }
 
 .subtitles-container {
-  background-color: aqua;
-  padding: 10px 100px;
+  background-color: rgba(0, 0, 0, 0.35);
+  margin: 10px 100px;
+  padding: 20px;
+  border: 2px solid $tertiary-color;
+  border-radius: 10px;
+  
 }
 
 .ui.button.custom-button {
@@ -69,6 +73,7 @@
 
 .paso1-title {
   //margin: 50px 20px 20px 20px;
+  margin: 0px 60px;
   color: white;
   font-size: 30px;
   //font-family: Impact, fantasy;
