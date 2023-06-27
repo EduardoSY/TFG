@@ -5,11 +5,12 @@ import {
   BasicModal,
   FormularioModal,
   FormularioModalStreaming,
-  FormularioTraduccion
+  FormularioTraduccion,
+  InputToken,
 } from "../../components/Web";
 import { ListSubtitles } from "../../components/Web/Subtitles";
 import videojs from "video.js";
-import { Button, Container, Divider } from "semantic-ui-react";
+import { Button, Container, Divider, Input } from "semantic-ui-react";
 import "./Home.scss";
 import { ENV } from "../../utils";
 
@@ -25,13 +26,12 @@ export function Home() {
 
   const [shouldReloadPlayer, setShouldReloadPlayer] = useState(false);
 
-
   const [videoJsOptions, setVideoJsOptions] = useState({
     autoplay: false,
     controls: true,
     responsive: true,
     fluid: true,
-    preload: 'none',
+    preload: "none",
     sources: [
       {
         //src: 'http://127.0.0.1:8887/Muito_ArmaCSGO_Esp.mp4',
@@ -50,28 +50,8 @@ export function Home() {
 
   const playerRef = React.useRef(null);
 
-  // const videoJsOptions = {
-  //   autoplay: true,
-  //   controls: true,
-  //   responsive: true,
-  //   fluid: true,
-  //   sources: [{
-  //     src: videoUrl || 'http://127.0.0.1:8887/Muito_ArmaCSGO_Esp.mp4',
-  //     type: 'video/mp4'
-  //   }]
-  // };
-
   const handlePlayerReady = (player) => {
     playerRef.current = player;
-
-    //const track = player.addRemoteTextTrack({
-    //   kind: 'captions',
-    //   label: 'Subtitles',
-    //   src: `http://127.0.0.1:8887/${sessionStorage.getItem('token')}_original.vtt`,
-    //   srclang: 'es' // Idioma de los subtítulos (código ISO 639-1)
-    // }, false);
-
-    //track.mode = 'showing';
     console.log("CARGAMOS LOS SUBTITULOS");
     console.log(allSubtitles);
 
@@ -79,16 +59,6 @@ export function Home() {
       console.log(subtitle);
       player.addRemoteTextTrack(subtitle, false);
     });
-    //   const track1 = player.addRemoteTextTrack({
-    //     kind: 'captions',
-    //     label: 'Espain',
-    //     src: 'http://127.0.0.1:8887/d62fdb6f-efd7-4caa-8c50-08da1ead76aa_original.vtt',
-    //     srclang: 'en'
-    // }, false);
-      //track1.mode = 'showing';
-  
-      //track2.mode = 'showing';
-    //});
 
     // You can handle player events here, for example:
     player.on("waiting", () => {
@@ -98,11 +68,6 @@ export function Home() {
     player.on("dispose", () => {
       videojs.log("player will dispose");
     });
-
-    //var tracks = player.textTracks();
-    //console.log("ESTOS SON LOS TRAKOS");
-    //console.log(tracks);
-
   };
 
   const setVideoUrl = (url) => {
@@ -120,7 +85,6 @@ export function Home() {
     }));
   };
 
-
   const setVideoUrl2 = (url) => {
     console.log("ONICHAN2");
     console.log(url);
@@ -135,36 +99,29 @@ export function Home() {
     }));
   };
 
-
   const setSubtitlesVideo = (subtitulos) => {
     console.log("Cambio En Subtitulos");
     console.log(subtitulos);
     const subtitleItems = [];
     subtitulos.files.forEach((sub) => {
       //let path = `http://localhost:3977/api/v1/stream/video/${sub.filename}`
-      let path = ENV.BASE_API+"/"+ENV.API_ROUTES.STREAM_DATA + "/" + sub.filename;
-      
+      let path =
+        ENV.BASE_API + "/" + ENV.API_ROUTES.STREAM_DATA + "/" + sub.filename;
+
       console.log(path);
       subtitleItems.push({
-        kind: 'captions',
+        kind: "captions",
         label: sub.language,
         src: path, // Ajusta la ruta del archivo de subtítulos según sea necesario
-        srclang: sub.language.substring(0, 2).toLowerCase() // Ajusta el campo del idioma según corresponda en tus datos de subtítulos
+        srclang: sub.language.substring(0, 2).toLowerCase(), // Ajusta el campo del idioma según corresponda en tus datos de subtítulos
       });
     });
-    
+
     console.log("Cambio En Subtitulos 123");
     //setVideoUrl(urlvideo);
     console.log(subtitleItems);
-  //   player.addRemoteTextTrack({
-  //     kind: 'captions',
-  //     label: 'Ingles',
-  //     src: 'http://127.0.0.1:8887/d62fdb6f-efd7-4caa-8c50-08da1ead76aa_EN-US.vtt',
-  //     srclang: 'en'
-  // }, false);
 
     setAllSubtitles(subtitleItems);
-    //playerRef.current.trigger('loadstart');
   };
 
   console.log(videoJsOptions.sources[0].src);
@@ -176,30 +133,44 @@ export function Home() {
   };
 
   return (
-    <div>
+    <div className="general-background">
       <Banner />
-      <div className="button-div">
-        <Button primary onClick={onOpenCloseModalLocal}>
-          Cargar video
-        </Button>
-        <p> </p>
-        <Button primary onClick={onOpenCloseModalStream}>
-          Cargar URL
-        </Button>
+      <div className="paso1-div">
+      <h2 className="paso1-title">Carga un video desde tu dispositivo local o desde Google Drive</h2>
+        <div className="button-div">
+          <Button className="custom-button" onClick={onOpenCloseModalLocal}>
+            Cargar video desde tu dispositivo local
+          </Button>
+          <p> </p>
+          <Button className="custom-button" onClick={onOpenCloseModalStream}>
+            Cargar video con enlace de Google Drive
+          </Button>
+        </div>
+        <h2 className="paso1-title">¿Ya has usado la aplicación? <br/> Utiliza el token que se generó en última sesión
+          y recupera tus datos. 
+        </h2>
+        <div className="component-div">
+          <InputToken
+            setVideoUrl={setVideoUrl}
+            setShouldRefreshSubtitles={setShouldRefreshSubtitles}
+          />
+        </div>
       </div>
-      <p>Video URL: {videoJsOptions.sources[0].src}</p>
+
+      {/* <p>Video URL: {videoJsOptions.sources[0].src}</p> */}
       <div className="video-container">
         <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
-        <Button onClick={handlePlayerReset}>Reiniciar reproductor</Button>
-
       </div>
-      
+
       <BasicModal
         show={showModalLocal}
         close={onOpenCloseModalLocal}
         title="Cargar video"
       >
-        <FormularioModal setVideoUrl={setVideoUrl} setShouldRefreshSubtitles={setShouldRefreshSubtitles}/>
+        <FormularioModal
+          setVideoUrl={setVideoUrl}
+          setShouldRefreshSubtitles={setShouldRefreshSubtitles}
+        />
       </BasicModal>
 
       <BasicModal
@@ -210,16 +181,15 @@ export function Home() {
         <FormularioModalStreaming setVideoUrl={setVideoUrl} />
       </BasicModal>
       <div className="subtitles-container">
-      <FormularioTraduccion />
-      
-        <ListSubtitles shouldRefreshSubtitles={shouldRefreshSubtitles} setShouldRefreshSubtitles={setShouldRefreshSubtitles}
-        setSubtitlesVideo={setSubtitlesVideo} setShouldReloadPlayer={setShouldReloadPlayer}/>
+        <FormularioTraduccion />
+
+        <ListSubtitles
+          shouldRefreshSubtitles={shouldRefreshSubtitles}
+          setShouldRefreshSubtitles={setShouldRefreshSubtitles}
+          setSubtitlesVideo={setSubtitlesVideo}
+          setShouldReloadPlayer={setShouldReloadPlayer}
+        />
       </div>
-      
     </div>
   );
 }
-
-
-
-

@@ -1,19 +1,81 @@
+@import "../../scss/index.scss";
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .general-background {
+    animation: gradientAnimation 30s infinite linear;
+    background: linear-gradient(to right,#37306b, #021943, #27f3dd);
+    background-size: 200% 200%;
+  }
+
 
 .video-container {
-    padding: 10px 100px;
-    background-color: bisque;
-    //width: 640px; /* ancho */
-    //height: 360px; /* alto */   
+  padding: 10px 100px;
+  //background-color: bisque;
+  //width: 640px; /* ancho */
+  //height: 360px; /* alto */
 }
 
-.button-div{
-    display: flex; /* establece el contenedor como un flexbox */
-    justify-content: center; /* centra horizontalmente los elementos */
-    align-items: center; /* centra verticalmente los elementos */
-    padding-top: 20px;
+.paso1-div {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.35);
+  justify-content: center;
+  align-items: center;
+  margin: 10px 100px;
+  padding-top: 20px;
+  border: 2px solid $tertiary-color;
+  border-radius: 10px;
 }
 
-.subtitles-container{
-    background-color: aqua;
-    padding: 10px 100px;
+.component-div {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* centra verticalmente los elementos */
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.button-div {
+  display: flex; /* establece el contenedor como un flexbox */
+  justify-content: center; /* centra horizontalmente los elementos */
+  align-items: center; /* centra verticalmente los elementos */
+  padding-top: 20px;
+  padding-bottom: 20px;
+  //background-color: black;
+}
+
+.subtitles-container {
+  background-color: aqua;
+  padding: 10px 100px;
+}
+
+.ui.button.custom-button {
+  background-color: $secondary-color;
+  color: white;
+  transition-duration: 0.4s;
+  &:hover {
+    background-color: $tertiary-color;
+    color: white;
+  }
+  font-size: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.paso1-title {
+  //margin: 50px 20px 20px 20px;
+  color: white;
+  font-size: 30px;
+  //font-family: Impact, fantasy;
+  text-align: center;
+  text-shadow: rgb(0, 0, 0) 0px 0 20px;
+
+  font-weight: 100;
+  //font-size: 60px;
+  //line-height: 22px;
 }

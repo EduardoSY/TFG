@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { WebRouter } from './router';
 
 function App() {
-  //sessionStorage.clear();
+  sessionStorage.clear();
   // const [file, setFile] = useState(null);
 
   // const handleChange = (event) => {

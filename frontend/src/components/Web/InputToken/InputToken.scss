@@ -1,0 +1,35 @@
+@import "../../../scss/index.scss";
+
+.ui.button.custom-input-button{
+    background-color: $secondary-color;
+    color: white;
+    transition-duration: 0.4s;
+    &:hover {
+      background-color: $tertiary-color;
+      color: white;
+    }
+    font-size: 20px;
+}
+
+.ui.button.custom-input-button_delete{
+    background-color: $secondary-color;
+    color: white;
+    transition-duration: 0.4s;
+    &:hover {
+      background-color: red;
+      color: white;
+    }
+    font-size: 20px;
+}
+
+
+.custom-input input {
+    width: 300px;
+    transition: 0.25s;
+    -webkit-transition: all 300ms ease-in;
+  }
+  
+  .custom-input input:focus{
+    width: 500px;
+  }
+  

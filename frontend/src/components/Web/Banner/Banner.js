@@ -13,11 +13,8 @@ export  function Banner() {
               subtítulos si lo deseas.
               Además, si estás aprendiendo idiomas podrás traducir los
               subtítulos al idioma que desees.
-              123456
             </h2>
         </Container>
-
-        <div className='banner_dark'/>  
     </div>
   )
 }

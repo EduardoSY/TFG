@@ -1,9 +1,11 @@
 @import "../../../scss/index.scss";
 
 .banner {
+    border-bottom: 2px solid $tertiary-color;
     height: 500px;
     //background-color: orange;
     background-image: url("../../../assets/fondo_IA.jpg"); //<a href="https://www.freepik.es/foto-gratis/selva-fondo-bosque-naturaleza-escena-futurista-generativo-ai_39671175.htm#&position=8&from_view=search">Imagen de tohamina</a> en Freepik
+    
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -37,8 +39,8 @@
     h2 {
         color: white;
         font-weight: 100;
-        //font-size: 60px;
-        line-height: 22px;
+        font-size: 30px;
+        line-height: 150%;
         z-index: 1;
     }
 }
