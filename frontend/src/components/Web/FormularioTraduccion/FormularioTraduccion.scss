@@ -1,9 +1,9 @@
 @import "../../../scss/index.scss";
 
 .titulo-traduccion {
-    margin: 0px 60px;
+    margin: 20px 60px;
     color: white;
-    font-size: 30px;
+    font-size: 35px;
     //font-family: Impact, fantasy;
     text-align: center;
     text-shadow: rgb(0, 0, 0) 0px 0 20px;
@@ -11,15 +11,22 @@
     font-weight: 100;
 }
 
-.ui.button.custom-button {
+
+.test{
+  //background-color: orange;
+  padding:0;
+text-align: center;}
+
+.ui.button.custom-button_traduccion{
+   
     background-color: $secondary-color;
     color: white;
     transition-duration: 0.4s;
+    font-size: 16px;
     &:hover {
       background-color: $tertiary-color;
       color: white;
     }
-    font-size: 20px;
   }
 
   .my-component {

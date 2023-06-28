@@ -33,9 +33,12 @@ export function ListSubtitlesItem(props) {
           </span>
         </div>
         <div>
-          <Button onClick={downloadVTT} download>
-            Descargar
+          <Button onClick={downloadVTT} download className="custom-input-button_delete">
+          <Button.Content>
+            <Icon name="download" /> Descargar
+          </Button.Content>
           </Button>
+
         </div>
       </div>
     </Container>

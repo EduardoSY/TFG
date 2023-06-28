@@ -48,11 +48,11 @@ export function InputToken({ setVideoUrl, setShouldRefreshSubtitles }) {
         {/* <Button className="custom-input-button_delete" onClick={handleDeleteData} type="submit">Delete</Button> */}
         <Button
           animated="fade"
-          className="custom-input-button_delete"
+          className="custom-input-button2"
           onClick={handleDeleteData}
           type="submit"
         >
-          <Button.Content visible>
+          <Button.Content visible >
             <Icon name="delete" /> Eliminar
           </Button.Content>
           <Button.Content hidden>¿Estas seguro?</Button.Content>

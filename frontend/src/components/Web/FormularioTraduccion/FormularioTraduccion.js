@@ -106,14 +106,15 @@ export function FormularioTraduccion() {
             
         />
         </Form.Field>
-
-        <Form.Button className='custom-button' type="submit" loading={loadingButton} fluid onClick={() => console.log(`Has marcado ${selectedLanguage}`)}>
-        Traducir
-      </Form.Button>
+<div className='test'>
+        <Button  className='custom-button_traduccion' fluid type="submit" loading={loadingButton} onClick={() => console.log(`Has marcado ${selectedLanguage}`)}>
+        Traducir subtítulos
+      </Button>
+      </div>
       <Message
       success
       header='Traducción solicitada'
-      content='En breves momentos tendrás lista la transcripción. Pulsa el botón de recargar para actualizar la lista de subtítulos.'
+      content='En breves momentos tendrás lista la transcripción. Puede tardar unos minutos. Pulsa el botón de recargar para actualizar la lista de subtítulos.'
     />
 
 </Form>
