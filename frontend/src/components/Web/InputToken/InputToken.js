@@ -3,9 +3,15 @@ import { Button, Input, Icon } from "semantic-ui-react";
 import { ENV } from "../../../utils";
 
 import { Subtitles } from "../../../api/subtitles";
+import { manageData } from "../../../api/manageData";
 import "./InputToken.scss";
 
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+
 const subtitlesController = new Subtitles();
+const manageDataController = new manageData();
 
 export function InputToken({ setVideoUrl, setShouldRefreshSubtitles }) {
   const [token, setToken] = useState("");
@@ -26,15 +32,52 @@ export function InputToken({ setVideoUrl, setShouldRefreshSubtitles }) {
     // Lógica para borrar los datos del backend utilizando el token
     console.log("Borrando datos del backend");
     console.log("Token:", token);
+    if(token !== null){
+      const response = manageDataController.deleteData(token);
+      console.log(response);
+    }
+    //notify_sucess(false);
+    
   };
 
   const handleTokenChange = (event) => {
     setToken(event.target.value);
   };
 
+  const notify_sucess = (response) =>{
+    if(response){
+    toast.success("Datos eliminados con éxito 👋", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  } else {
+    toast.error("Datos eliminados con éxito 👋", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
+};
+
   return (
     <div>
-      <Input type="text" placeholder="Ingresa el token" action className="custom-input">
+      <Input
+        type="text"
+        placeholder="Ingresa el token"
+        action
+        className="custom-input"
+      >
         <input value={token} onChange={handleTokenChange} />
         <Button
           className="custom-input-button"
@@ -52,11 +95,23 @@ export function InputToken({ setVideoUrl, setShouldRefreshSubtitles }) {
           onClick={handleDeleteData}
           type="submit"
         >
-          <Button.Content visible >
+          <Button.Content visible>
             <Icon name="delete" /> Eliminar
           </Button.Content>
           <Button.Content hidden>¿Estas seguro?</Button.Content>
         </Button>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </Input>
     </div>
   );

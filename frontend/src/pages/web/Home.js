@@ -10,9 +10,10 @@ import {
 } from "../../components/Web";
 import { ListSubtitles } from "../../components/Web/Subtitles";
 import videojs from "video.js";
-import { Button, Container, Divider, Input } from "semantic-ui-react";
+import { Button, Container, Divider, Message, Input } from "semantic-ui-react";
 import "./Home.scss";
 import { ENV } from "../../utils";
+
 
 export function Home() {
   const [showModalLocal, setShowModalLocal] = useState(false);
@@ -35,8 +36,8 @@ export function Home() {
     sources: [
       {
         //src: 'http://127.0.0.1:8887/Muito_ArmaCSGO_Esp.mp4',
-        src: "https://drive.google.com/uc?id=12Thpap-SbgbwY1WVOy28AouHzOWOVUtu&export=download",
-        type: "video/mp4",
+        //src: "https://drive.google.com/uc?id=12Thpap-SbgbwY1WVOy28AouHzOWOVUtu&export=download",
+        //type: "video/mp4",
       },
     ],
   });
@@ -132,11 +133,15 @@ export function Home() {
     }
   };
 
+ 
+
   return (
     <div className="general-background">
       <Banner />
       <div className="paso1-div">
-      <h2 className="paso1-title">Carga un video desde tu dispositivo local o desde Google Drive</h2>
+        <h2 className="paso1-title">
+          Carga un video desde tu dispositivo local o desde Google Drive
+        </h2>
         <div className="button-div">
           <Button className="custom-button" onClick={onOpenCloseModalLocal}>
             Cargar video desde tu dispositivo local
@@ -146,8 +151,9 @@ export function Home() {
             Cargar video con enlace de Google Drive
           </Button>
         </div>
-        <h2 className="paso1-title">¿Ya has usado la aplicación? <br/> Utiliza el token que se generó en tu última sesión
-          y recupera o elimina tus datos.
+        <h2 className="paso1-title">
+          ¿Ya has usado la aplicación? <br /> Utiliza el token que se generó en
+          tu última sesión y recupera o elimina tus datos.
         </h2>
         <div className="component-div">
           <InputToken
@@ -156,6 +162,7 @@ export function Home() {
           />
         </div>
       </div>
+
 
       {/* <p>Video URL: {videoJsOptions.sources[0].src}</p> */}
       <div className="video-container">
@@ -180,9 +187,31 @@ export function Home() {
       >
         <FormularioModalStreaming setVideoUrl={setVideoUrl} />
       </BasicModal>
+
+      {sessionStorage.getItem("token") !== null && (
+        <Message className="custom-message-token" size="huge">
+          <h3 className="header-token-zone">
+            Token de autenticación
+          </h3>
+          <p className="text-token-zone">
+            Guarda este token para recuperar o borrar tus datos más adelante.
+          </p>
+          <Message.Content>
+            <Input
+              label={{ icon: "key" }}
+              labelPosition="left corner"
+              fluid
+              value={sessionStorage.getItem("token")}
+              readOnly
+              className="center aligned"
+            />
+          </Message.Content>
+        </Message>
+      )}
+
       <div className="subtitles-container">
         <FormularioTraduccion />
-    <Divider/>
+        <Divider />
         <ListSubtitles
           shouldRefreshSubtitles={shouldRefreshSubtitles}
           setShouldRefreshSubtitles={setShouldRefreshSubtitles}

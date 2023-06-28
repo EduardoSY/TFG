@@ -10,8 +10,8 @@ export const ENV = {
     TRANLATION_OPTIONS: "traslate/available_languages",
     REQUEST_TRANSLATION: "traslate/request_translation",
     DOWNLOAD_VTT: "vttfiles/download",
-    STREAM_DATA: "stream/video",
-    TRANSCRIPTION: "transcrip/speechtext"
+    STREAM_DATA: "stream",
+    TRANSCRIPTION: "transcrip/speechtext",
   }
 }
 

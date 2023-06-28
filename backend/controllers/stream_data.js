@@ -10,15 +10,6 @@ const { UPLOADS_PATH } = require("../constants");
 const mime = require('mime-types');
 const upload = multer();
 
-//ESTO NO CUMPLE PRINCIPIO SOLID PERO BUENO, HAY QUE MODIFICARLO
-async function get_result_transcription(config){
-
-}
-
-async function request_transcription(video_path, token){
-
-}
-
 //Funcion para obtener desde google drive
 function streamData(req, res){
         const { id } = req.params;
@@ -42,6 +33,43 @@ function streamData(req, res){
   
 }
 
+function deleteData(req, res){
+  const { id } = req.params;
+  console.log(id);
+  const folderPath = path.join(__dirname, '../uploads');
+  let contador = 0;
+
+  const patron = new RegExp(`^${id}*`);
+
+  fs.readdir(folderPath, (error, archivos) => {
+    if (error) {
+      console.error('Error al leer el directorio:', error);
+      return;
+    }
+  
+    archivos.forEach((archivo) => {
+      console.log(archivo);
+      if (archivo.startsWith(id)) {
+        const rutaArchivo = path.join(folderPath, archivo);
+        contador = contador + 1;
+        //  fs.unlink(rutaArchivo, (error) => {
+        //   if (error) {
+        //      console.error('Error al eliminar el archivo:', error);
+        //    } else {
+        //      console.log(`Archivo eliminado: ${rutaArchivo}`);
+        //    }
+        //  });
+      }
+    });
+    res.status(200).json({contador: contador});
+    console.log(`Se eliminarian ${contador} archivos`);
+  });
+  
+  
+ 
+}
+
 module.exports = {
-    streamData
+    streamData,
+    deleteData
 };

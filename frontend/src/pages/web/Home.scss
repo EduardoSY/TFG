@@ -84,3 +84,37 @@
   //font-size: 60px;
   //line-height: 22px;
 }
+
+
+.ui.message.custom-message-token{
+  background-color: $secondary-color;
+  margin: auto;
+  padding: 20px;
+  width: 50%;
+  border: 2px solid $tertiary-color;
+  border-radius: 10px;
+}
+
+.centered-input input {
+  text-align: center;
+}
+
+.header-token-zone {
+  margin: 10px 60px;
+  color: white;
+  font-size: 35px;
+  //font-family: Impact, fantasy;
+  text-align: center;
+  text-shadow: rgb(0, 0, 0) 0px 0 20px;
+  font-weight: 100;
+}
+
+.text-token-zone {
+  margin: 10px 60px;
+  color: white;
+  font-size: 30px;
+  //font-family: Impact, fantasy;
+  text-align: center;
+  text-shadow: rgb(0, 0, 0) 0px 0 20px;
+  font-weight: 100;
+}
