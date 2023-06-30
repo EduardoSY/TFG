@@ -9,6 +9,7 @@ export const ENV = {
     SUBTITLES: "vttfiles",
     TRANLATION_OPTIONS: "traslate/available_languages",
     REQUEST_TRANSLATION: "traslate/request_translation",
+    CHECK_TRANSCRIPTION: "transcrip/speechtext/status",
     DOWNLOAD_VTT: "vttfiles/download",
     STREAM_DATA: "stream",
     TRANSCRIPTION: "transcrip/speechtext",
@@ -141,3 +142,87 @@ export const languages = [
       "name": "Chinese (simplified)"
   }
 ];
+
+export const supportedSpeechTextLanguages = [
+    {
+        "key": "en-US",
+        "text": "English",
+        "value": "en-US"
+      },
+      {
+        "key": "zh-CN",
+        "text": "Chinese",
+        "value": "zh-CN"
+      },
+      {
+        "key": "ja-JP",
+        "text": "Japanese",
+        "value": "ja-JP"
+      },
+      {
+        "key": "de-DE",
+        "text": "German",
+        "value": "de-DE"
+      },
+      {
+        "key": "es-ES",
+        "text": "Spanish",
+        "value": "es-ES"
+      },
+      {
+        "key": "it-IT",
+        "text": "Italian",
+        "value": "it-IT"
+      },
+      {
+        "key": "ar-AE",
+        "text": "Arabic",
+        "value": "ar-AE"
+      },
+      {
+        "key": "fr-FR",
+        "text": "French",
+        "value": "fr-FR"
+      },
+      {
+        "key": "nl-NL",
+        "text": "Dutch",
+        "value": "nl-NL"
+      },
+      {
+        "key": "pt-PT",
+        "text": "Portuguese",
+        "value": "pt-PT"
+      },
+      {
+        "key": "hi-IN",
+        "text": "Hindi",
+        "value": "hi-IN"
+      },
+      {
+        "key": "fa-IR",
+        "text": "Persian",
+        "value": "fa-IR"
+      },
+      {
+        "key": "ru-RU",
+        "text": "Russian",
+        "value": "ru-RU"
+      },
+      {
+        "key": "uk-UA",
+        "text": "Ukrainian",
+        "value": "uk-UA"
+      },
+      {
+        "key": "fil-PH",
+        "text": "Filipino",
+        "value": "fil-PH"
+      },
+      {
+        "key": "el-GR",
+        "text": "Greek",
+        "value": "el-GR"
+      }
+  ];
+  

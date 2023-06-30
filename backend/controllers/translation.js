@@ -32,7 +32,13 @@ async function requestTranslation(req, res) {
   const { token, selectedLanguage } = req.body;
 
   //const vttFile = UPLOADS_PATH + `/${token}_original.vtt`;
-  const vttFile = path.join(__dirname, "../uploads", `${token}_original.vtt`);
+  //const vttFile = path.join(__dirname, "../uploads", `${token}_original.vtt`);
+  const workdir = path.join(__dirname, "../uploads");
+  const vttFiletemp = fs.readdirSync(workdir)
+  .filter(file => file.includes(`${token}_original-`) && file.endsWith('.vtt'));
+  console.log(vttFiletemp);
+
+  const vttFile = path.join(workdir, vttFiletemp[0]);
 
   const vttContent = fs.readFileSync(vttFile, "utf8");
 

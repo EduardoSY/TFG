@@ -5,20 +5,23 @@ import { Subtitles } from "../../../api/subtitles";
 import { ENV } from "../../../utils";
 import { Translation } from "../../../api/translation";
 import "./FormularioModal.scss";
+import { supportedSpeechTextLanguages } from "../../../utils";
+
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+
 
 const subtitlesController = new Subtitles();
 
 export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
-  const options = [
-    { key: "es", text: "Español", value: "Español" },
-    { key: "en", text: "Inglés", value: "Inglés" },
-    { key: "fr", text: "Frances", value: "Frances" },
-  ];
+
 
   const [file, setFile] = useState(null);
-  const [errorState, setErrorState] = useState(false);
   const [showState, setShowState] = useState("");
   const [submitState, setSubmitState] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState("");
+
   
 
   const [availableLanguages, setAvailableLanguages] = useState();
@@ -74,10 +77,12 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
   const handleSubmit = async (event) => {
     if(!file){
       setSubmitState("error");
+      console.log(selectedLanguage);
     }
     event.preventDefault();
     const formData = new FormData();
     formData.append("video", file);
+    formData.append("language", selectedLanguage);
     console.log("FILE SIZE");
     console.log(file.size);
     setSubmitState("sucess");
@@ -100,6 +105,7 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
 
     console.log("FORM MODAL DATA REPSONSE");
     console.log(response.data.uniqueId);
+    console.log(response.data.taskID);
     //const new_video_path = "http://127.0.0.1:8887/" + response.data.uniqueId +"."+response.data.extension ;
     //const new_video_path = "http://localhost:3977/api/v1/stream/video/" + response.data.uniqueId +"."+response.data.extension ;
     const new_video_path =
@@ -115,9 +121,24 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
     console.log("NUEVA URL");
     console.log(new_video_path);
     setShouldRefreshSubtitles(true);
-
+      //const test = "9496dcdb-5284-493d-951b-fc6e8d6b2fc0";
+    await axios.get(ENV.BASE_API + "/" + ENV.API_ROUTES.CHECK_TRANSCRIPTION + "/" + response.data.taskID);
+    notify();
     //HASTA AQUI
   };
+
+  const notify = () =>{
+    toast.info('Transcripción lista. Pulsa el botón de recargar', {
+      position: "top-center",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+};
   return (
     <Form
       error={showState === "error"}
@@ -149,7 +170,8 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
           placeholder="Selecciona el idioma del video"
           fluid
           selection
-          options={modifiedObj}
+          options={supportedSpeechTextLanguages}
+          onChange={(event, data) => setSelectedLanguage(data.value)}
         />
         <Message
           warning
@@ -174,9 +196,21 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
         />
 )}
 
-
+<ToastContainer
+          position="top-center"
+          autoClose={10000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       
 
     </Form>
+    
   );
 }

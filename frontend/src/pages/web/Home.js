@@ -36,8 +36,8 @@ export function Home() {
     sources: [
       {
         //src: 'http://127.0.0.1:8887/Muito_ArmaCSGO_Esp.mp4',
-        //src: "https://drive.google.com/uc?id=12Thpap-SbgbwY1WVOy28AouHzOWOVUtu&export=download",
-        //type: "video/mp4",
+        src: "https://drive.google.com/uc?id=12Thpap-SbgbwY1WVOy28AouHzOWOVUtu&export=download",
+        type: "video/mp4",
       },
     ],
   });
@@ -185,7 +185,7 @@ export function Home() {
         close={onOpenCloseModalStream}
         title="Cargar video con enlace de Google Drive"
       >
-        <FormularioModalStreaming setVideoUrl={setVideoUrl} />
+        <FormularioModalStreaming setVideoUrl={setVideoUrl} setShouldRefreshSubtitles={setShouldRefreshSubtitles}/>
       </BasicModal>
 
       {sessionStorage.getItem("token") !== null && (

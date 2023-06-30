@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { ENV } from "../../../utils";
 import {
   Form,
   Dropdown,
@@ -12,17 +13,22 @@ import { Subtitles } from "../../../api/subtitles";
 import { Translation } from "../../../api/translation";
 import { isGoogleDriveUrl } from "../../../utils/checkFunctions";
 import { InfoIconPopUp } from "../InfoIconPopUp";
+import { supportedSpeechTextLanguages } from "../../../utils";
+
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+
 
 const subtitlesController = new Subtitles();
 const translationController = new Translation();
 
-export function FormularioModalStreaming({ setVideoUrl }) {
-  const [videoUrlstate, setVideoUrlstate] = useState(null);
+export function FormularioModalStreaming({ setVideoUrl, setShouldRefreshSubtitles }) {
+  const [videoUrlstate, setVideoUrlstate] = useState("");
   const [checkStatus, setCheckStatus] = useState("");
   const [submitState, setSubmitState] = useState("");
-
-  const [URL, setURL] = useState(null);
   const [availableLanguages, setAvailableLanguages] = useState();
+  const [selectedLanguage, setSelectedLanguage] = useState("");
 
   const handleInputChange = (event) => {
     setSubmitState("");
@@ -40,7 +46,7 @@ export function FormularioModalStreaming({ setVideoUrl }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!videoUrlstate) {
+    if (videoUrlstate === "") {
       setSubmitState("error");
     } else {
       setSubmitState("sucess");
@@ -49,12 +55,14 @@ export function FormularioModalStreaming({ setVideoUrl }) {
 
       const response = await axios.post(
         "http://localhost:3977/api/v1/transcrip/speechtext/url",
-        { videoUrlstate }
+        { videoUrlstate, language: selectedLanguage }
       );
       subtitlesController.setAccessToken(response.data.uniqueId);
       console.log(response.data);
       setVideoUrl(response.data.newURL);
-
+      await axios.get(ENV.BASE_API + "/" + ENV.API_ROUTES.CHECK_TRANSCRIPTION + "/" + response.data.taskID);
+      setShouldRefreshSubtitles(true);
+      notify();
       //HASTA AQUI
     }
   };
@@ -85,6 +93,19 @@ export function FormularioModalStreaming({ setVideoUrl }) {
     };
     modifiedObj.push(modifiedItem);
   }
+
+  const notify = () =>{
+    toast.info('Transcripción lista. Pulsa el botón de recargar', {
+      position: "top-center",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+};
   return (
     <Form
       error={checkStatus === "error"}
@@ -96,7 +117,7 @@ export function FormularioModalStreaming({ setVideoUrl }) {
         error={checkStatus === "error" || submitState === "error"}
       >
         <label>
-          URL del video{" "}
+          URL pública del video{" "}
           <InfoIconPopUp
             imagePath="../../../assets/acceso_drive.jpg"
             altText="Descripción de la imagen"
@@ -124,7 +145,8 @@ export function FormularioModalStreaming({ setVideoUrl }) {
           placeholder="Selecciona el idioma del video"
           fluid
           selection
-          options={modifiedObj}
+          options={supportedSpeechTextLanguages}
+          onChange={(event, data) => setSelectedLanguage(data.value)}
         />
         <Message
           warning
