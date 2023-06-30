@@ -15,8 +15,6 @@ export  function Banner() {
               subtítulos al idioma que desees.
             </h2>
         </Container>
-
-        <div className='banner_dark'/>  
     </div>
   )
 }

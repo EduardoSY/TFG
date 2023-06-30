@@ -1,0 +1,56 @@
+@import "../../../scss/index.scss";
+
+.ui.button.custom-input-button{
+    background-color: $secondary-color;
+    color: white;
+    transition-duration: 0.4s;
+    &:hover {
+      background-color: $tertiary-color;
+      color: white;
+    }
+    font-size: 20px;
+}
+
+.ui.button.custom-input-button2{
+    background-color: $secondary-color;
+    color: white;
+    transition-duration: 0.4s;
+    &:hover {
+      background-color: red;
+      color: white;
+    }
+    font-size: 20px;
+}
+
+
+.custom-input input {
+    width: 300px;
+  }
+
+  .custom-input2 {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+.inputtoken{
+  h2{
+    margin-bottom: 10px;
+    color: white;
+    font-size: 15px;
+    //font-family: Impact, fantasy;
+    //text-align: center;
+    text-shadow: rgb(0, 0, 0) 0px 0 20px;
+    font-weight: 100;
+  }
+  .ui.form{
+    //background-color: red;
+    //text-align: center;
+  }
+  //text-align: center;
+  //align-items: center;
+  //background-color: aqua;
+}
+
+.radio-style label{
+  color: white;
+}

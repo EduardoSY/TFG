@@ -1,0 +1,39 @@
+@import "../../../scss/index.scss";
+
+.titulo-traduccion {
+    margin: 20px 60px;
+    color: white;
+    font-size: 35px;
+    //font-family: Impact, fantasy;
+    text-align: center;
+    text-shadow: rgb(0, 0, 0) 0px 0 20px;
+  
+    font-weight: 100;
+}
+
+
+.test{
+  //background-color: orange;
+  padding:0;
+text-align: center;}
+
+.ui.button.custom-button_traduccion{
+   
+    background-color: $secondary-color;
+    color: white;
+    transition-duration: 0.4s;
+    font-size: 16px;
+    &:hover {
+      background-color: $tertiary-color;
+      color: white;
+    }
+  }
+
+  .my-component {
+    opacity: 0;
+    transition: opacity 3s;
+  }
+
+  .my-component.show {
+    opacity: 1;
+  }
