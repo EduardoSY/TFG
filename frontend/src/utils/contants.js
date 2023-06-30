@@ -1,5 +1,5 @@
-const SERVER_IP = "localhost:3977";
-//const SERVER_IP = "exampleback.onrender.com";
+//const SERVER_IP = "localhost:3977";
+const SERVER_IP = "backendtfg-4jyo.onrender.com";
 
 const API_VERSION = "v1";
 export const ENV = {
