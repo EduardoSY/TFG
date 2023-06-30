@@ -54,7 +54,7 @@ export function FormularioModalStreaming({ setVideoUrl, setShouldRefreshSubtitle
       //DE AQUI
 
       const response = await axios.post(
-        "http://localhost:3977/api/v1/transcrip/speechtext/url",
+        ENV.BASE_API + "/" + ENV.API_ROUTES.TRANSCRIPTION_URL,
         { videoUrlstate, language: selectedLanguage }
       );
       subtitlesController.setAccessToken(response.data.uniqueId);
