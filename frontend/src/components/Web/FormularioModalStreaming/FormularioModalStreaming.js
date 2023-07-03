@@ -58,11 +58,29 @@ export function FormularioModalStreaming({ setVideoUrl, setShouldRefreshSubtitle
         { videoUrlstate, language: selectedLanguage }
       );
       subtitlesController.setAccessToken(response.data.uniqueId);
-      console.log(response.data);
-      setVideoUrl(response.data.newURL);
-      await axios.get(ENV.BASE_API + "/" + ENV.API_ROUTES.CHECK_TRANSCRIPTION + "/" + response.data.taskID);
-      setShouldRefreshSubtitles(true);
-      notify();
+      // console.log(response.data);
+      // setVideoUrl(response.data.newURL);
+      // await axios.get(ENV.BASE_API + "/" + ENV.API_ROUTES.CHECK_TRANSCRIPTION + "/" + response.data.taskID);
+      // setShouldRefreshSubtitles(true);
+      // notify();
+
+
+      const new_video_path =
+      ENV.BASE_API +
+      "/" +
+      ENV.API_ROUTES.STREAM_DATA_VIDEO +
+      "/" +
+      response.data.uniqueId +
+      "." +
+      response.data.extension;
+
+    setVideoUrl(new_video_path);
+    console.log("NUEVA URL");
+    console.log(new_video_path);
+    setShouldRefreshSubtitles(true);
+      //const test = "9496dcdb-5284-493d-951b-fc6e8d6b2fc0";
+    await axios.get(ENV.BASE_API + "/" + ENV.API_ROUTES.CHECK_TRANSCRIPTION + "/" + response.data.taskID);
+    notify();
       //HASTA AQUI
     }
   };

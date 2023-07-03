@@ -32,11 +32,13 @@ export function Home() {
     controls: true,
     responsive: true,
     fluid: true,
-    preload: "none",
+    preload: "auto",
+    liveui: true, 
     sources: [
       {
         //src: 'http://127.0.0.1:8887/Muito_ArmaCSGO_Esp.mp4',
-        src: "https://drive.google.com/uc?id=12Thpap-SbgbwY1WVOy28AouHzOWOVUtu&export=download",
+        //src: "https://drive.google.com/uc?id=12Thpap-SbgbwY1WVOy28AouHzOWOVUtu&export=download",
+        src: "https://drive.google.com/uc?id=12UOOmQ5Ubp6NRVzO5PPLvNnviHMxR2ji&export=download",
         type: "video/mp4",
       },
     ],
@@ -51,6 +53,13 @@ export function Home() {
 
   const playerRef = React.useRef(null);
 
+  const handleBeforeSeek = (event) => {
+    const time = playerRef.current.currentTime();
+    const rangeValue = `bytes=${Math.floor(time)}-`;
+    playerRef.current.tech_.el_.setRequestHeader('Range', rangeValue);
+  };
+
+
   const handlePlayerReady = (player) => {
     playerRef.current = player;
     console.log("CARGAMOS LOS SUBTITULOS");
@@ -62,13 +71,15 @@ export function Home() {
     });
 
     // You can handle player events here, for example:
-    player.on("waiting", () => {
-      videojs.log("player is waiting");
-    });
+    // player.on("waiting", () => {
+    //   videojs.log("player is waiting");
+    // });
 
-    player.on("dispose", () => {
-      videojs.log("player will dispose");
-    });
+    // player.on("dispose", () => {
+    //   videojs.log("player will dispose");
+    // });
+    player.on('beforeseek', handleBeforeSeek);
+
   };
 
   const setVideoUrl = (url) => {
@@ -86,19 +97,6 @@ export function Home() {
     }));
   };
 
-  const setVideoUrl2 = (url) => {
-    console.log("ONICHAN2");
-    console.log(url);
-    setVideoJsOptions((prevOptions) => ({
-      ...prevOptions,
-      sources: [
-        {
-          src: url,
-          type: "video/mp4",
-        },
-      ],
-    }));
-  };
 
   const setSubtitlesVideo = (subtitulos) => {
     console.log("Cambio En Subtitulos");
@@ -125,13 +123,13 @@ export function Home() {
     setAllSubtitles(subtitleItems);
   };
 
-  console.log(videoJsOptions.sources[0].src);
+  console.log(videoJsOptions);
 
-  const handlePlayerReset = () => {
-    if (playerRef.current) {
-      playerRef.current.load();
-    }
-  };
+  // const handlePlayerReset = () => {
+  //   if (playerRef.current) {
+  //     playerRef.current.load();
+  //   }
+  // };
 
  
 
@@ -162,6 +160,12 @@ export function Home() {
           />
         </div>
       </div>
+
+      <button onClick={() => {
+      // Aquí puedes realizar cualquier lógica para obtener la URL
+      const newURL = 'http://localhost:3977/api/v1/stream/7f413924-5811-4067-b78d-6f9447730e05.mp4';
+      setVideoUrl(newURL);
+    }}>Haz clic</button>
 
 
       {/* <p>Video URL: {videoJsOptions.sources[0].src}</p> */}

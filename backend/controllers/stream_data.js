@@ -22,6 +22,8 @@ function streamData(req, res){
           res.status(404).send('Video no encontrado');
           return;
         }
+
+        
       
         // Configura el encabezado de respuesta para el tipo de contenido del video
         const mimeType = mime.lookup(filePath);
@@ -31,6 +33,53 @@ function streamData(req, res){
         const stream = fs.createReadStream(filePath);
         stream.pipe(res);
   
+}
+
+function streamDataVideo(req, res){
+  const { id } = req.params;
+  const range = req.headers.range;
+
+  console.log(req.headers);
+    if (!range) {
+        res.status(400).send("Requires Range header");
+    }
+    console.log("WEBO");
+  //const pathito = "../uploads"
+  const filePath = path.join(__dirname, '../uploads', id);
+  console.log(filePath);
+
+  // Comprueba si el archivo existe
+  if (!fs.existsSync(filePath)) {
+    res.status(404).send('Video no encontrado');
+    return;
+  }
+
+  const videoSize = fs.statSync(filePath).size;
+  const CHUNK_SIZE = 10 ** 6; // 1MB
+  const start = Number(range.replace(/\D/g, ""));
+  const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
+  const contentLength = end - start + 1;
+
+  // Configura el encabezado de respuesta para el tipo de contenido del video
+  const mimeType = mime.lookup(filePath);
+  // res.setHeader('Content-Type', mimeType);
+  // res.setHeader('Content-Range', `bytes ${start}-${end}/${videoSize}`);
+  // res.setHeader('Content-Length', contentLength);
+  // res.setHeader('Accept-Ranges', 'bytes');
+
+  const headers = {
+    "Content-Range": `bytes ${start}-${end}/${videoSize}`,
+    "Accept-Ranges": "bytes",
+    "Content-Length": contentLength,
+    "Content-Type": "video/mp4",
+};
+
+  res.writeHead(206, headers);
+  console.log("aqui llegué");
+  // Transfiere el archivo de video al cliente
+  const stream = fs.createReadStream(filePath, { start, end });
+  stream.pipe(res);
+
 }
 
 function deleteData(req, res){
@@ -71,5 +120,6 @@ function deleteData(req, res){
 
 module.exports = {
     streamData,
-    deleteData
+    deleteData,
+    streamDataVideo
 };

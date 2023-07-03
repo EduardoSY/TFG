@@ -111,7 +111,7 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
     const new_video_path =
       ENV.BASE_API +
       "/" +
-      ENV.API_ROUTES.STREAM_DATA +
+      ENV.API_ROUTES.STREAM_DATA_VIDEO +
       "/" +
       response.data.uniqueId +
       "." +

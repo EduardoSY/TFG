@@ -1,10 +1,10 @@
-//const SERVER_IP = "localhost:3977";
-const SERVER_IP = "backendtfg-4jyo.onrender.com";
+const SERVER_IP = "localhost:3977";
+//const SERVER_IP = "backendtfg-4jyo.onrender.com";
 
 const API_VERSION = "v1";
 export const ENV = {
-  BASE_PATH: `https://${SERVER_IP}`,
-  BASE_API: `https://${SERVER_IP}/api/${API_VERSION}`,
+  BASE_PATH: `http://${SERVER_IP}`,
+  BASE_API: `http://${SERVER_IP}/api/${API_VERSION}`,
   API_ROUTES: {
     SUBTITLES: "vttfiles",
     TRANLATION_OPTIONS: "traslate/available_languages",
@@ -13,6 +13,7 @@ export const ENV = {
     CHECK_TRANSCRIPTION: "transcrip/speechtext/status",
     DOWNLOAD_VTT: "vttfiles/download",
     STREAM_DATA: "stream",
+    STREAM_DATA_VIDEO: "stream/video",
     TRANSCRIPTION: "transcrip/speechtext",
   }
 }
