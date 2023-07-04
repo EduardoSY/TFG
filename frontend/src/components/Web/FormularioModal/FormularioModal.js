@@ -89,6 +89,16 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
 
     //AQUI
 
+    const loadingToastId = toast.info('Cargando el vídeo y generando transcripción. Puede tardar varios minutos.', {
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      closeButton: false,
+      theme: "light",
+    });
+
     const response = await axios.post(
       ENV.BASE_API + "/" + ENV.API_ROUTES.TRANSCRIPTION,
       formData,
@@ -117,15 +127,7 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
       "." +
       response.data.extension;
 
-      const loadingToastId = toast.info('Cargando el vídeo y generando transcripción. Puede tardar varios minutos.', {
-        autoClose: false,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        closeButton: false,
-        theme: "light",
-      });
+      
 
     setVideoUrl(new_video_path);
     console.log("NUEVA URL");
