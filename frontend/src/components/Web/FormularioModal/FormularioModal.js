@@ -31,7 +31,7 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
   const handleChange = (event) => {
     setSubmitState("");
     const selectedFile = event.target.files[0];
-    const maxSize = 10485760; // Tamaño máximo permitido en bytes (1 MB)
+    const maxSize = 209715200; // Tamaño máximo permitido en bytes (200 MB)
 
     if (selectedFile && selectedFile.size > maxSize) {
       // Mostrar alerta de error
@@ -165,7 +165,7 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
             
       <Form.Input
         required
-        label=" Seleccionar fichero (MAX. 50MB.)"
+        label=" Seleccionar fichero (MAX. 200MB.)"
         name="file"
         type="file"
         placeholder="Fichero"
