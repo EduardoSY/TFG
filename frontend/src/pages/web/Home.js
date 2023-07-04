@@ -38,7 +38,7 @@ export function Home() {
       {
         //src: 'http://127.0.0.1:8887/Muito_ArmaCSGO_Esp.mp4',
         //src: "https://drive.google.com/uc?id=12Thpap-SbgbwY1WVOy28AouHzOWOVUtu&export=download",
-        src: "https://drive.google.com/uc?id=12UOOmQ5Ubp6NRVzO5PPLvNnviHMxR2ji&export=download",
+        src: "https://drive.google.com/uc?id=1IkOdETQj1jT0Nrw-qimwQJe-WDShJXQN&export=download",
         type: "video/mp4",
       },
     ],
@@ -160,14 +160,6 @@ export function Home() {
           />
         </div>
       </div>
-
-      <button onClick={() => {
-      // Aquí puedes realizar cualquier lógica para obtener la URL
-      const newURL = 'http://localhost:3977/api/v1/stream/7f413924-5811-4067-b78d-6f9447730e05.mp4';
-      setVideoUrl(newURL);
-    }}>Haz clic</button>
-
-
       {/* <p>Video URL: {videoJsOptions.sources[0].src}</p> */}
       <div className="video-container">
         <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />

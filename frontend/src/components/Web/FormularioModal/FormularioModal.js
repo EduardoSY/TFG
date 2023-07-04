@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Dropdown, Button, Message, Popup} from "semantic-ui-react";
+import { Form, Dropdown, Button, Message, Loader} from "semantic-ui-react";
 import { Subtitles } from "../../../api/subtitles";
 import { ENV } from "../../../utils";
 import { Translation } from "../../../api/translation";
@@ -117,13 +117,30 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
       "." +
       response.data.extension;
 
+      const loadingToastId = toast.info('Cargando el vídeo y generando transcripción. Puede tardar varios minutos.', {
+        autoClose: false,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        closeButton: false,
+        theme: "light",
+      });
+
     setVideoUrl(new_video_path);
     console.log("NUEVA URL");
     console.log(new_video_path);
     setShouldRefreshSubtitles(true);
       //const test = "9496dcdb-5284-493d-951b-fc6e8d6b2fc0";
-    await axios.get(ENV.BASE_API + "/" + ENV.API_ROUTES.CHECK_TRANSCRIPTION + "/" + response.data.taskID);
-    notify();
+    
+      
+      await axios.get(ENV.BASE_API + "/" + ENV.API_ROUTES.CHECK_TRANSCRIPTION + "/" + response.data.taskID);
+    
+
+
+    
+      toast.dismiss(loadingToastId);
+      notify();
     //HASTA AQUI
   };
 
@@ -196,8 +213,9 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
         />
 )}
 
-<ToastContainer
+{/* <ToastContainer
           position="top-center"
+          limit={1}
           autoClose={10000}
           hideProgressBar={false}
           newestOnTop={false}
@@ -207,7 +225,7 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
           draggable
           pauseOnHover
           theme="light"
-        />
+        /> */}
       
 
     </Form>
