@@ -13,6 +13,7 @@ export const ENV = {
     CHECK_TRANSCRIPTION: "transcrip/speechtext/status",
     DOWNLOAD_VTT: "vttfiles/download",
     STREAM_DATA: "stream",
+    STREAM_DATA_VIDEO: "stream/video",
     TRANSCRIPTION: "transcrip/speechtext",
   }
 }
