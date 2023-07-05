@@ -56,7 +56,7 @@ api.post("/transcrip/speechtext", upload.single("video"), async (req, res) => {
 async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
   console.log("DESCARGA Y TRANSCRIPCION");
   try {
-    const response = await axios.get(newurl, { responseType: "stream" });
+    let response = await axios.get(newurl, { responseType: "stream" });
     const tipo_respuesta = response.headers["content-type"];
 
     if (tipo_respuesta === "video/mp4") {
@@ -79,10 +79,12 @@ async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
 
       console.log("Archivo descargado correctamente sin formulario.");
     } else if (tipo_respuesta === "text/html; charset=utf-8") {
+      response = await axios.get(newurl);
       console.log("AQUI SALTARIA EL HTML");
        const html = response.data;
     const $ = cheerio.load(html);
     const downloadForm = $('#download-form');
+    console.log(downloadForm);
 
     if (downloadForm.length > 0) {
       console.log("DESCARGA CON FORMULARIO");
