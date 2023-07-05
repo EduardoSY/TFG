@@ -101,13 +101,13 @@ function deleteData(req, res){
       if (archivo.startsWith(id)) {
         const rutaArchivo = path.join(folderPath, archivo);
         contador = contador + 1;
-        //  fs.unlink(rutaArchivo, (error) => {
-        //   if (error) {
-        //      console.error('Error al eliminar el archivo:', error);
-        //    } else {
-        //      console.log(`Archivo eliminado: ${rutaArchivo}`);
-        //    }
-        //  });
+         fs.unlink(rutaArchivo, (error) => {
+          if (error) {
+             console.error('Error al eliminar el archivo:', error);
+           } else {
+             console.log(`Archivo eliminado: ${rutaArchivo}`);
+           }
+         });
       }
     });
     res.status(200).json({contador: contador});

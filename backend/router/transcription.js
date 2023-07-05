@@ -56,6 +56,7 @@ api.post("/transcrip/speechtext", upload.single("video"), async (req, res) => {
 
 
 async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
+  console.log("DESCARGA Y TRANSCRIPCION");
   try {
     const response = await axios.get(newurl);
     const html = response.data;
@@ -63,6 +64,7 @@ async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
     const downloadForm = $('#download-form');
   
     if (downloadForm.length > 0) {
+      console.log("DESCARGA CON FORMULARIO");
       const downloadUrl = downloadForm.attr('action');
       const downloadResponse = await axios.get(downloadUrl, { responseType: 'stream' });
   
@@ -83,6 +85,7 @@ async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
       console.log('Archivo descargado correctamente.');
     } else {
       // Descarga directa sin formulario de descarga
+      console.log("DESCARGA SIN FORMULARIO");
       const fileResponse = await axios.get(newurl, { responseType: 'stream' });
       const fileStream = fs.createWriteStream(newFilePath);
   
