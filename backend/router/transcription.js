@@ -1,12 +1,12 @@
 const express = require("express");
-const axios = require('axios');
+const axios = require("axios");
 const TranscriptionController = require("../controllers/transcription.js");
 const path = require("path");
 const api = express.Router();
 const https = require("https");
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
-const cheerio = require('cheerio');
+const cheerio = require("cheerio");
 
 //api.post("/transcrip/speechtext", TranscriptionController.request_transcription);
 
@@ -53,85 +53,103 @@ api.post("/transcrip/speechtext", upload.single("video"), async (req, res) => {
   //Devolver aquí el nombre del video asignado
 });
 
-
-
 async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
   console.log("DESCARGA Y TRANSCRIPCION");
   try {
-    const response = await axios.get(newurl);
-    const html = response.data;
-    const $ = cheerio.load(html);
-    const downloadForm = $('#download-form');
-  
-    if (downloadForm.length > 0) {
-      console.log("DESCARGA CON FORMULARIO");
-      const downloadUrl = downloadForm.attr('action');
-      const downloadResponse = await axios.get(downloadUrl, { responseType: 'stream' });
-  
-      const file = fs.createWriteStream(newFilePath);
-      downloadResponse.data.pipe(file);
-  
-      await new Promise((resolve, reject) => {
-        file.on('finish', () => {
-          file.close();
-          resolve();
-        });
-  
-        file.on('error', (error) => {
-          reject(error);
-        });
-      });
-  
-      console.log('Archivo descargado correctamente.');
-    } else {
-      // Descarga directa sin formulario de descarga
+    const response = await axios.get(newurl, { responseType: "stream" });
+    const tipo_respuesta = response.headers["content-type"];
+
+    if (tipo_respuesta === "video/mp4") {
       console.log("DESCARGA SIN FORMULARIO");
-      const fileResponse = await axios.get(newurl, { responseType: 'stream' });
+      //const fileResponse = await axios.get(newurl, { responseType: "stream" });
       const fileStream = fs.createWriteStream(newFilePath);
-  
-      fileResponse.data.pipe(fileStream);
-  
+
+      response.data.pipe(fileStream);
+
       await new Promise((resolve, reject) => {
-        fileStream.on('finish', () => {
+        fileStream.on("finish", () => {
           fileStream.close();
           resolve();
         });
-  
-        fileStream.on('error', (error) => {
+
+        fileStream.on("error", (error) => {
           reject(error);
         });
       });
-  
-      console.log('Archivo descargado correctamente sin formulario.');
+
+      console.log("Archivo descargado correctamente sin formulario.");
+    } else if (tipo_respuesta === "text/html; charset=utf-8") {
+      console.log("AQUI SALTARIA EL HTML");
     }
-  
-    const resultRequest = await TranscriptionController.request_transcription(
-      newFilePath,
-      uniqueId,
-      language
-    );
-  
-    console.log('Transcripción realizada correctamente.');
-    console.log(resultRequest);
-  
-    TranscriptionController.writeFile(resultRequest);
-  
-    const response2 = {
-      uniqueId: uniqueId,
-      extension: newFilePath.split('.').pop(),
-      taskID: resultRequest.taskID,
-    };
-  
-    return response2;
+    //const html = response.data;
+    //const $ = cheerio.load(html);
+    //const downloadForm = $('#download-form');
+
+    // if (downloadForm.length > 0) {
+    //   console.log("DESCARGA CON FORMULARIO");
+    //   const downloadUrl = downloadForm.attr('action');
+    //   const downloadResponse = await axios.get(downloadUrl, { responseType: 'stream' });
+
+    //   const file = fs.createWriteStream(newFilePath);
+    //   downloadResponse.data.pipe(file);
+
+    //   await new Promise((resolve, reject) => {
+    //     file.on('finish', () => {
+    //       file.close();
+    //       resolve();
+    //     });
+
+    //     file.on('error', (error) => {
+    //       reject(error);
+    //     });
+    //   });
+
+    //   console.log('Archivo descargado correctamente.');
+    // } else {
+    //   // Descarga directa sin formulario de descarga
+    //   console.log("DESCARGA SIN FORMULARIO");
+    //   const fileResponse = await axios.get(newurl, { responseType: 'stream' });
+    //   const fileStream = fs.createWriteStream(newFilePath);
+
+    //   fileResponse.data.pipe(fileStream);
+
+    //   await new Promise((resolve, reject) => {
+    //     fileStream.on('finish', () => {
+    //       fileStream.close();
+    //       resolve();
+    //     });
+
+    //     fileStream.on('error', (error) => {
+    //       reject(error);
+    //     });
+    //   });
+
+    //   console.log('Archivo descargado correctamente sin formulario.');
+    // }
+
+    // const resultRequest = await TranscriptionController.request_transcription(
+    //   newFilePath,
+    //   uniqueId,
+    //   language
+    // );
+
+    // console.log('Transcripción realizada correctamente.');
+    // console.log(resultRequest);
+
+    // TranscriptionController.writeFile(resultRequest);
+
+    // const response2 = {
+    //   uniqueId: uniqueId,
+    //   extension: newFilePath.split('.').pop(),
+    //   taskID: resultRequest.taskID,
+    // };
+
+    // return response2;
   } catch (error) {
-    console.error('Error al descargar el archivo:', error);
+    console.error("Error al descargar el archivo:", error);
     throw error;
   }
 }
-
-
-
-
 
 api.post("/transcrip/speechtext/url", async (req, res) => {
   console.log("ESTO ES URL");
@@ -148,12 +166,17 @@ api.post("/transcrip/speechtext/url", async (req, res) => {
     const id = streamingurl.substring(start, end);
     const newurl = `https://drive.google.com/uc?id=${id}&export=download`;
 
-    const response = await downloadAndTranscribe(newurl, newFilePath, uniqueId, req.body.language);
+    const response = await downloadAndTranscribe(
+      newurl,
+      newFilePath,
+      uniqueId,
+      req.body.language
+    );
 
     res.status(200).json(response);
   } catch (error) {
-    console.error('Error en la transcripción:', error);
-    res.status(500).send('Error en la transcripción.');
+    console.error("Error en la transcripción:", error);
+    res.status(500).send("Error en la transcripción.");
   }
 });
 
