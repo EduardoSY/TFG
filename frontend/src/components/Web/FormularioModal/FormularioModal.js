@@ -147,7 +147,7 @@ export function FormularioModal({ setVideoUrl, setShouldRefreshSubtitles }) {
   };
 
   const notify = () =>{
-    toast.info('Transcripción lista. Pulsa el botón de recargar', {
+    toast.info('Transcripción lista. Pulsa el botón de "Actualizar subtítulos"', {
       position: "top-center",
       autoClose: 10000,
       hideProgressBar: false,

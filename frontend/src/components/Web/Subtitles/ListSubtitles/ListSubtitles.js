@@ -92,11 +92,11 @@ export function ListSubtitles({
         <h3>
           ¿No te aparecen los subtítulos en el listado o en el reproductor? <br/> No
           te preocupes, el proceso puede llevar un tiempo. Pulsa el botón de
-          recargar y una vez aparezcan tus subtítulos en la lista estarán
+          "Actualizar subtítulos" y una vez aparezcan tus subtítulos en la lista estarán
           disponibles en el reproductor.
         </h3>
         <Button className="button-recargar" onClick={onReload}>
-          Recargar
+          Actualizar subtítulos
         </Button>
       </div>
       <Divider />

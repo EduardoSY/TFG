@@ -112,7 +112,8 @@ export function Home() {
         kind: "captions",
         label: sub.language_full.toUpperCase(),
         src: path, // Ajusta la ruta del archivo de subtítulos según sea necesario
-        srclang: sub.language.substring(0, 2).toLowerCase(), // Ajusta el campo del idioma según corresponda en tus datos de subtítulos
+        srclang: sub.language.substring(0, 2).toLowerCase(),
+        default: true // Ajusta el campo del idioma según corresponda en tus datos de subtítulos
       });
     });
 
@@ -150,9 +151,12 @@ export function Home() {
           </Button>
         </div>
         <h2 className="paso1-title">
-          ¿Ya has usado la aplicación? <br /> Utiliza el token que se generó en
-          tu última sesión y recupera o elimina tus datos.
+          ¿Ya has usado la aplicación?
         </h2>
+        <h3 className="paso1-subtitle">
+          Utiliza el token que se generó en
+          tu última sesión y recupera o elimina tus datos.
+        </h3>
         <div className="component-div">
           <InputToken
             setVideoUrl={setVideoUrl}
@@ -161,33 +165,11 @@ export function Home() {
         </div>
       </div>
       {/* <p>Video URL: {videoJsOptions.sources[0].src}</p> */}
-      <div className="video-container">
-        <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
-      </div>
-
-      <BasicModal
-        show={showModalLocal}
-        close={onOpenCloseModalLocal}
-        title="Cargar video desde tu dispositivo local"
-      >
-        <FormularioModal
-          setVideoUrl={setVideoUrl}
-          setShouldRefreshSubtitles={setShouldRefreshSubtitles}
-        />
-      </BasicModal>
-
-      <BasicModal
-        show={showModalStream}
-        close={onOpenCloseModalStream}
-        title="Cargar video con enlace de Google Drive"
-      >
-        <FormularioModalStreaming setVideoUrl={setVideoUrl} setShouldRefreshSubtitles={setShouldRefreshSubtitles}/>
-      </BasicModal>
 
       {sessionStorage.getItem("token") !== null && (
         <Message className="custom-message-token" size="huge">
           <h3 className="header-token-zone">
-            Token de autenticación
+            Token de identificación
           </h3>
           <p className="text-token-zone">
             Guarda este token para recuperar o borrar tus datos más adelante.
@@ -215,6 +197,33 @@ export function Home() {
           setShouldReloadPlayer={setShouldReloadPlayer}
         />
       </div>
+
+      <div className="video-container">
+        <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+      </div>
+
+      <BasicModal
+        show={showModalLocal}
+        close={onOpenCloseModalLocal}
+        title="Cargar video desde tu dispositivo local"
+      >
+        <FormularioModal
+          setVideoUrl={setVideoUrl}
+          setShouldRefreshSubtitles={setShouldRefreshSubtitles}
+        />
+      </BasicModal>
+
+      <BasicModal
+        show={showModalStream}
+        close={onOpenCloseModalStream}
+        title="Cargar video con enlace de Google Drive"
+      >
+        <FormularioModalStreaming setVideoUrl={setVideoUrl} setShouldRefreshSubtitles={setShouldRefreshSubtitles}/>
+      </BasicModal>
+
+     
+
+    
     </div>
   );
 }

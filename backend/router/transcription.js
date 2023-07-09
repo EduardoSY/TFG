@@ -56,7 +56,7 @@ api.post("/transcrip/speechtext", upload.single("video"), async (req, res) => {
 async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
   console.log("DESCARGA Y TRANSCRIPCION");
   try {
-    const response = await axios.get(newurl, { responseType: "stream" });
+    let response = await axios.get(newurl, { responseType: "stream" });
     const tipo_respuesta = response.headers["content-type"];
 
     if (tipo_respuesta === "video/mp4") {
@@ -79,7 +79,34 @@ async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
 
       console.log("Archivo descargado correctamente sin formulario.");
     } else if (tipo_respuesta === "text/html; charset=utf-8") {
+      response = await axios.get(newurl);
       console.log("AQUI SALTARIA EL HTML");
+       const html = response.data;
+    const $ = cheerio.load(html);
+    const downloadForm = $('#download-form');
+    console.log(downloadForm);
+
+    if (downloadForm.length > 0) {
+      console.log("DESCARGA CON FORMULARIO");
+      const downloadUrl = downloadForm.attr('action');
+      const downloadResponse = await axios.get(downloadUrl, { responseType: 'stream' });
+
+      const file = fs.createWriteStream(newFilePath);
+      downloadResponse.data.pipe(file);
+
+      await new Promise((resolve, reject) => {
+        file.on('finish', () => {
+          file.close();
+          resolve();
+        });
+
+        file.on('error', (error) => {
+          reject(error);
+        });
+      });
+
+      console.log('Archivo descargado correctamente.');
+    }
     }
     //const html = response.data;
     //const $ = cheerio.load(html);
@@ -127,24 +154,24 @@ async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
     //   console.log('Archivo descargado correctamente sin formulario.');
     // }
 
-    // const resultRequest = await TranscriptionController.request_transcription(
-    //   newFilePath,
-    //   uniqueId,
-    //   language
-    // );
+    const resultRequest = await TranscriptionController.request_transcription(
+      newFilePath,
+      uniqueId,
+      language
+    );
 
-    // console.log('Transcripción realizada correctamente.');
-    // console.log(resultRequest);
+    console.log('Transcripción realizada correctamente.');
+    console.log(resultRequest);
 
-    // TranscriptionController.writeFile(resultRequest);
+    TranscriptionController.writeFile(resultRequest);
 
-    // const response2 = {
-    //   uniqueId: uniqueId,
-    //   extension: newFilePath.split('.').pop(),
-    //   taskID: resultRequest.taskID,
-    // };
+    const response2 = {
+      uniqueId: uniqueId,
+      extension: newFilePath.split('.').pop(),
+      taskID: resultRequest.taskID,
+    };
 
-    // return response2;
+    return response2;
   } catch (error) {
     console.error("Error al descargar el archivo:", error);
     throw error;
