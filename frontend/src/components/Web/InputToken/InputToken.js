@@ -56,6 +56,7 @@ export function InputToken({ setVideoUrl, setShouldRefreshSubtitles }) {
     if (token !== "" && isValidUUID(token)) {
       const response = await manageDataController.deleteData(token);
       notify(response);
+      sessionStorage.removeItem("token");
     } else {
       notify_notoken();
     }
@@ -109,24 +110,6 @@ export function InputToken({ setVideoUrl, setShouldRefreshSubtitles }) {
 
   return (
     <div className="inputtoken">
-      <Form>
-        <h2>Selecciona el método que utilizaste en la sesión que quieres recuperar</h2>
-        <Form.Group inline >
-          <Radio
-            label={<label style={{ color: 'white', marginRight: 10}}>Carga desde dispositivo local</label>}
-            value="token"
-            checked={selectedOption === "token"}
-            onChange={handleOptionChange}
-          />
-          <Radio
-            label={<label style={{ color: 'white', marginRight: 10}}>Enlace de Google Drive</label>}
-            value="url"
-            checked={selectedOption === "url"}
-            onChange={handleOptionChange}
-          />
-        </Form.Group>
-      </Form>
-
       <Input
         type="text"
         placeholder="Ingresa el token"
@@ -169,25 +152,6 @@ export function InputToken({ setVideoUrl, setShouldRefreshSubtitles }) {
         />
       </Input>
       <br/>
-      {selectedOption === "url" && (
-      <div>
-        <Input type="text"
-        placeholder="Ingresa la URL del video de Google Drive"
-        action
-        className="custom-input2">
-        <input value={driveURL} onChange={(event) => setDriveURL(event.target.value)} />
-        <Button
-          className="custom-input-button"
-          onClick={handleDriveURL}
-          type="submit"
-        >
-          <Button.Content visible>
-            <Icon name="linkify" /> Recuperar video
-          </Button.Content>
-        </Button>
-        </Input>
-        </div>
-      )}
     </div>
   );
 }
