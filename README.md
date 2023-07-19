@@ -1,4 +1,4 @@
-# TFG: TITULO --- Eduardo Da Silva
+# TFG: Diseño y automatización de subtitulación de vídeos bajo demanda - Eduardo Da Silva Yanes
 En este repositorio de aloja el código fuente realizado para el Trabajo de Fin de Grado.
 
 <details>
