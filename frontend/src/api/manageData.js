@@ -3,7 +3,7 @@ export class manageData {
     baseApi = ENV.BASE_API;
 
     async deleteData(id) {
-        console.log("FUNCION LLAMADA");
+        
         try {
           const url = `${this.baseApi}/${ENV.API_ROUTES.STREAM_DATA}/${id}`;
           console.log(url);

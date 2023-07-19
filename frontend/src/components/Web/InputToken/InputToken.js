@@ -29,20 +29,19 @@ export function InputToken({ setVideoUrl, setShouldRefreshSubtitles }) {
     const id = driveURL.substring(start, end);
     const newurl = `https://drive.google.com/uc?id=${id}&export=download`
     setVideoUrl(newurl);
-    console.log(driveURL);
+    
   }
 
   const handleGetData = () => {
     // Lógica para recuperar los datos del backend utilizando el token
     if (token !== "" && isValidUUID(token)) {
       console.log("Recuperando datos del backend");
-      console.log("Token:", token);
+      
       subtitlesController.setAccessToken(token);
       const new_video_path =
         ENV.BASE_API + "/" + ENV.API_ROUTES.STREAM_DATA + "/" + token + ".mp4";
       setVideoUrl(new_video_path);
-      console.log("NUEVA URL");
-      console.log(new_video_path);
+      
       setShouldRefreshSubtitles(true);
     } else {
       notify_notoken();
@@ -52,7 +51,7 @@ export function InputToken({ setVideoUrl, setShouldRefreshSubtitles }) {
   const handleDeleteData = async () => {
     // Lógica para borrar los datos del backend utilizando el token
     console.log("Borrando datos del backend");
-    console.log("Token:", token);
+    
     if (token !== "" && isValidUUID(token)) {
       const response = await manageDataController.deleteData(token);
       notify(response);
@@ -126,7 +125,6 @@ export function InputToken({ setVideoUrl, setShouldRefreshSubtitles }) {
             <Icon name="cloud download" /> Recuperar
           </Button.Content>
         </Button>
-        {/* <Button className="custom-input-button_delete" onClick={handleDeleteData} type="submit">Delete</Button> */}
         <Button
           animated="fade"
           className="custom-input-button2"

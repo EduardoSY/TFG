@@ -19,11 +19,13 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
-
 const subtitlesController = new Subtitles();
 const translationController = new Translation();
 
-export function FormularioModalStreaming({ setVideoUrl, setShouldRefreshSubtitles }) {
+export function FormularioModalStreaming({
+  setVideoUrl,
+  setShouldRefreshSubtitles,
+}) {
   const [videoUrlstate, setVideoUrlstate] = useState("");
   const [checkStatus, setCheckStatus] = useState("");
   const [submitState, setSubmitState] = useState("");
@@ -53,49 +55,47 @@ export function FormularioModalStreaming({ setVideoUrl, setShouldRefreshSubtitle
 
       //DE AQUI
 
-      const loadingToastId = toast.info('Cargando el vídeo y generando transcripción. Puede tardar varios minutos.', {
-        autoClose: false,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: false,
-        closeButton: false,
-        theme: "light",
-      });
+      const loadingToastId = toast.info(
+        "Cargando el vídeo y generando transcripción. Puede tardar varios minutos.",
+        {
+          autoClose: false,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          closeButton: false,
+          theme: "light",
+        }
+      );
 
       const response = await axios.post(
         ENV.BASE_API + "/" + ENV.API_ROUTES.TRANSCRIPTION_URL,
         { videoUrlstate, language: selectedLanguage }
       );
       subtitlesController.setAccessToken(response.data.uniqueId);
-      // console.log(response.data);
-      // setVideoUrl(response.data.newURL);
-      // await axios.get(ENV.BASE_API + "/" + ENV.API_ROUTES.CHECK_TRANSCRIPTION + "/" + response.data.taskID);
-      // setShouldRefreshSubtitles(true);
-      // notify();
-
 
       const new_video_path =
-      ENV.BASE_API +
-      "/" +
-      ENV.API_ROUTES.STREAM_DATA_VIDEO +
-      "/" +
-      response.data.uniqueId +
-      "." +
-      response.data.extension;
+        ENV.BASE_API +
+        "/" +
+        ENV.API_ROUTES.STREAM_DATA_VIDEO +
+        "/" +
+        response.data.uniqueId +
+        "." +
+        response.data.extension;
 
-      
-
-    setVideoUrl(new_video_path);
-    console.log("NUEVA URL");
-    console.log(new_video_path);
-    setShouldRefreshSubtitles(true);
+      setVideoUrl(new_video_path);
+    
+      setShouldRefreshSubtitles(true);
       //const test = "9496dcdb-5284-493d-951b-fc6e8d6b2fc0";
-
-      
-    await axios.get(ENV.BASE_API + "/" + ENV.API_ROUTES.CHECK_TRANSCRIPTION + "/" + response.data.taskID);
-    toast.dismiss(loadingToastId);
-    notify();
+      await axios.get(
+        ENV.BASE_API +
+          "/" +
+          ENV.API_ROUTES.CHECK_TRANSCRIPTION +
+          "/" +
+          response.data.taskID
+      );
+      toast.dismiss(loadingToastId);
+      notify();
       //HASTA AQUI
     }
   };
@@ -106,8 +106,6 @@ export function FormularioModalStreaming({ setVideoUrl, setShouldRefreshSubtitle
         .getTranslationLanguages()
         .then((response) => {
           setAvailableLanguages(response);
-          console.log(response);
-          //console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -127,18 +125,21 @@ export function FormularioModalStreaming({ setVideoUrl, setShouldRefreshSubtitle
     modifiedObj.push(modifiedItem);
   }
 
-  const notify = () =>{
-    toast.info('Transcripción lista. Pulsa el botón de "Actualizar subtítulos"', {
-      position: "top-center",
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-};
+  const notify = () => {
+    toast.info(
+      'Transcripción lista. Pulsa el botón de "Actualizar subtítulos"',
+      {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
+  };
   return (
     <Form
       error={checkStatus === "error"}

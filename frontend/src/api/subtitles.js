@@ -4,10 +4,10 @@ export class Subtitles {
     baseApi = ENV.BASE_API;
 
     async getSubtitles(id_subtitles) {
-        console.log("FUNCION LLAMADA");
+        
         try {
           const url = `${this.baseApi}/${ENV.API_ROUTES.SUBTITLES}/${id_subtitles}`;
-          console.log(url);
+          
           const params = {
             method: "GET",
             headers: {
