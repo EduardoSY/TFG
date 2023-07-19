@@ -1,0 +1,44 @@
+@import "~/src/scss/index.scss";
+
+.subtitles-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    //background-color: orange;
+    padding: 10px;
+    
+    &__info {
+      flex-direction: column;
+      //background-color: blue;
+      //backdrop-filter: blur(2px) brightness(90%);
+      width: 100%;
+      color: white;
+        &-title {
+          font-weight: bold;
+          font-size: 30px;
+          text-shadow: rgb(0, 0, 0) 5px 0 10px;
+        }
+        &-subtitle {
+          font-weight: bold;
+          font-size: 15px;
+          text-shadow: rgb(0, 0, 0) 5px 0 10px;
+        }
+    }
+  }
+  
+  h2 {
+    font-size: 16px;
+    margin: 10px 0 0 0;
+    font-weight: normal;
+  }
+  
+  .ui.button.custom-input-button_delete{
+    background-color: $secondary-color;
+    color: white;
+    transition-duration: 0.4s;
+    &:hover {
+      background-color: $tertiary-color;
+      color: white;
+    }
+    font-size: 15px;
+}
