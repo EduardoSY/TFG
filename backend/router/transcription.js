@@ -8,8 +8,6 @@ const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const cheerio = require("cheerio");
 
-//api.post("/transcrip/speechtext", TranscriptionController.request_transcription);
-
 const multer = require("multer");
 //const upload = multer();
 let uniqueId = null;
@@ -27,18 +25,15 @@ var upload = multer({ storage: storage });
 
 api.post("/transcrip/speechtext", upload.single("video"), async (req, res) => {
   const video = req.file;
-  //console.log(req);
-  //const uniqueId = uuidv4();
-  //console.log(video);
+
   console.log(`El identificador unico es: ${uniqueId}`);
-  //console.log(req.file.path);
-  //const basename = path.basename(`${uniqueId}.mp4`.replace(/\\/g, "/"));
+
   const resultRequest = await TranscriptionController.request_transcription(
     req.file.path,
     uniqueId,
     req.body.language
   );
-  console.log("AAAA QUIERO MORIR");
+
   console.log(resultRequest);
   TranscriptionController.writeFile(resultRequest);
   // Aquí puedes procesar el archivo de video recibido
@@ -50,7 +45,6 @@ api.post("/transcrip/speechtext", upload.single("video"), async (req, res) => {
   //res.status(200).send(uniqueId);
   res.status(200).json(response);
 
-  //Devolver aquí el nombre del video asignado
 });
 
 async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
@@ -61,7 +55,6 @@ async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
 
     if (tipo_respuesta === "video/mp4") {
       console.log("DESCARGA SIN FORMULARIO");
-      //const fileResponse = await axios.get(newurl, { responseType: "stream" });
       const fileStream = fs.createWriteStream(newFilePath);
 
       response.data.pipe(fileStream);
@@ -81,78 +74,35 @@ async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
     } else if (tipo_respuesta === "text/html; charset=utf-8") {
       response = await axios.get(newurl);
       console.log("AQUI SALTARIA EL HTML");
-       const html = response.data;
-    const $ = cheerio.load(html);
-    const downloadForm = $('#download-form');
-    console.log(downloadForm);
+      const html = response.data;
+      const $ = cheerio.load(html);
+      const downloadForm = $("#download-form");
+      console.log(downloadForm);
 
-    if (downloadForm.length > 0) {
-      console.log("DESCARGA CON FORMULARIO");
-      const downloadUrl = downloadForm.attr('action');
-      const downloadResponse = await axios.get(downloadUrl, { responseType: 'stream' });
-
-      const file = fs.createWriteStream(newFilePath);
-      downloadResponse.data.pipe(file);
-
-      await new Promise((resolve, reject) => {
-        file.on('finish', () => {
-          file.close();
-          resolve();
+      if (downloadForm.length > 0) {
+        console.log("DESCARGA CON FORMULARIO");
+        const downloadUrl = downloadForm.attr("action");
+        const downloadResponse = await axios.get(downloadUrl, {
+          responseType: "stream",
         });
 
-        file.on('error', (error) => {
-          reject(error);
+        const file = fs.createWriteStream(newFilePath);
+        downloadResponse.data.pipe(file);
+
+        await new Promise((resolve, reject) => {
+          file.on("finish", () => {
+            file.close();
+            resolve();
+          });
+
+          file.on("error", (error) => {
+            reject(error);
+          });
         });
-      });
 
-      console.log('Archivo descargado correctamente.');
+        console.log("Archivo descargado correctamente.");
+      }
     }
-    }
-    //const html = response.data;
-    //const $ = cheerio.load(html);
-    //const downloadForm = $('#download-form');
-
-    // if (downloadForm.length > 0) {
-    //   console.log("DESCARGA CON FORMULARIO");
-    //   const downloadUrl = downloadForm.attr('action');
-    //   const downloadResponse = await axios.get(downloadUrl, { responseType: 'stream' });
-
-    //   const file = fs.createWriteStream(newFilePath);
-    //   downloadResponse.data.pipe(file);
-
-    //   await new Promise((resolve, reject) => {
-    //     file.on('finish', () => {
-    //       file.close();
-    //       resolve();
-    //     });
-
-    //     file.on('error', (error) => {
-    //       reject(error);
-    //     });
-    //   });
-
-    //   console.log('Archivo descargado correctamente.');
-    // } else {
-    //   // Descarga directa sin formulario de descarga
-    //   console.log("DESCARGA SIN FORMULARIO");
-    //   const fileResponse = await axios.get(newurl, { responseType: 'stream' });
-    //   const fileStream = fs.createWriteStream(newFilePath);
-
-    //   fileResponse.data.pipe(fileStream);
-
-    //   await new Promise((resolve, reject) => {
-    //     fileStream.on('finish', () => {
-    //       fileStream.close();
-    //       resolve();
-    //     });
-
-    //     fileStream.on('error', (error) => {
-    //       reject(error);
-    //     });
-    //   });
-
-    //   console.log('Archivo descargado correctamente sin formulario.');
-    // }
 
     const resultRequest = await TranscriptionController.request_transcription(
       newFilePath,
@@ -160,14 +110,14 @@ async function downloadAndTranscribe(newurl, newFilePath, uniqueId, language) {
       language
     );
 
-    console.log('Transcripción realizada correctamente.');
+    console.log("Transcripción realizada correctamente.");
     console.log(resultRequest);
 
     TranscriptionController.writeFile(resultRequest);
 
     const response2 = {
       uniqueId: uniqueId,
-      extension: newFilePath.split('.').pop(),
+      extension: newFilePath.split(".").pop(),
       taskID: resultRequest.taskID,
     };
 
@@ -209,7 +159,6 @@ api.post("/transcrip/speechtext/url", async (req, res) => {
 
 api.get("/transcrip/speechtext/status/:id", async (req, res) => {
   const { id } = req.params;
-  console.log("ASDASDPERRITO");
   if (await TranscriptionController.checkFinishedTranscription(id)) {
     res.status(200).send();
   }

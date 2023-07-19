@@ -28,7 +28,6 @@ async function get_transcription_files(req, res) {
         res
           .status(500)
           .json({ error: "Error al leer los archivos de transcripción" });
-        console.log("marico");
       } else {
         // Crea un array para almacenar la información de cada archivo
         const regex = /_(.*?)\.vtt/;
@@ -56,7 +55,6 @@ async function get_transcription_files(req, res) {
   } else {
     // El directorio no existe, devuelve un error 404
     res.status(404).json({ error: "Transcripción no encontrada" });
-    console.log("asd");
   }
 }
 
@@ -96,7 +94,6 @@ function downloadVTTFile(req, res) {
       res.status(500).send("Error al descargar el archivo");
     }
   });
-  //res.status(200).send("Fichero descargado correctamente");
 }
 
 module.exports = {

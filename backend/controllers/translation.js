@@ -34,8 +34,11 @@ async function requestTranslation(req, res) {
   //const vttFile = UPLOADS_PATH + `/${token}_original.vtt`;
   //const vttFile = path.join(__dirname, "../uploads", `${token}_original.vtt`);
   const workdir = path.join(__dirname, "../uploads");
-  const vttFiletemp = fs.readdirSync(workdir)
-  .filter(file => file.includes(`${token}_original-`) && file.endsWith('.vtt'));
+  const vttFiletemp = fs
+    .readdirSync(workdir)
+    .filter(
+      (file) => file.includes(`${token}_original-`) && file.endsWith(".vtt")
+    );
   console.log(vttFiletemp);
 
   const vttFile = path.join(workdir, vttFiletemp[0]);
@@ -51,7 +54,6 @@ async function requestTranslation(req, res) {
   const translatedText = translationResult.text;
 
   // Ruta y nombre del archivo de salida
-  //const translatedVttFile = UPLOADS_PATH + `/${token}_${selectedLanguage}.vtt`;
   const translatedVttFile = path.join(
     __dirname,
     "../uploads",

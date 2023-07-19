@@ -14,18 +14,6 @@ export function FormularioTraduccion() {
     const [availableLanguages, setAvailableLanguages] = useState("");
     const [loadingButton, setLoadingButton] = useState(false);
     const [formSuccess, setFormSuccess] = useState(false);
-    //const languages = translationController.getTranslationLanguages();
-    
-    // try {
-    //   const languages = translationController.getTranslationLanguages();
-    //   // Accede al resultado aquí
-    //   console.log(languages);
-    // } catch (error) {
-    //   // Maneja cualquier error que ocurra durante la ejecución de la promesa
-    //   console.error(error);
-    // }
-    // ;
-
     function wait(delay) {
       return new Promise((resolve) => {
         setTimeout(resolve, delay);
@@ -36,7 +24,6 @@ export function FormularioTraduccion() {
       translationController.getTranslationLanguages()
       .then((response) => {
         setAvailableLanguages(response);
-        //console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -79,10 +66,9 @@ export function FormularioTraduccion() {
         onSubmit: async (formValue) => {
           try {
             const token = sessionStorage.getItem('token');
-            console.log("HOLA PERRITO");
+           
             setLoadingButton(true);
             const response = translationController.requestTranslation(formValue, token);
-            //await wait(3000);
             setLoadingButton(false);
             setFormSuccess(true);
           } catch (error) {
@@ -92,7 +78,6 @@ export function FormularioTraduccion() {
       });
   return (
     <Form success={formSuccess} onSubmit={formik.handleSubmit}>
-        {/* <Form.Input name="file" type="file" placeholder="Fichero" accept="video/*"/> */}
         <Form.Field>
         <h1 className='titulo-traduccion'>¿Te interesa otro idioma? Traduce los subtítulos</h1>
         <Dropdown

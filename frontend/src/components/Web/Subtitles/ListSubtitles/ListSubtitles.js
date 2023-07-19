@@ -4,7 +4,6 @@ import { Subtitles } from "../../../../api/subtitles";
 import { ListSubtitlesItem } from "../ListSubtitlesItem";
 import { Loader, Button, Divider } from "semantic-ui-react";
 import { map, size } from "lodash";
-//import { post } from '../../../../../../backend/app';
 import { Translation } from "../../../../api/translation";
 
 const subtitlesController = new Subtitles();
@@ -22,11 +21,8 @@ export function ListSubtitles({
   const [reaload, isRealoading] = useState(true);
   const [reload, setReload] = useState(false);
   const onReload = () => setReload((prevState) => !prevState);
-  //console.log(subtitles.files);
 
   useEffect(() => {
-    let intervalId;
-    //if (shouldRefreshSubtitles) {
     (async () => {
       let newData;
       try {
@@ -34,42 +30,22 @@ export function ListSubtitles({
           await translationController.getTranslationLanguages();
 
         const token = sessionStorage.getItem("token");
-        console.log("ESTE ES EL TOKEN");
-        console.log(token);
+
         const response = await subtitlesController.getSubtitles(token);
-        console.log("REEEEESPONSE");
-        console.log(response);
         newData = response.files.map((item) => {
-          console.log(item.language);
-          console.log(language_available);
           const auxLanguage = language_available.find(
             (option) => option.language === item.language
           );
-          //console.log("KI ISHTO");
-          console.log(auxLanguage);
+
           const language_full = auxLanguage ? auxLanguage.name : item.language;
-          console.log(language_full);
+
           return {
             ...item,
             language_full,
           };
         });
 
-        // const newData = response.files.map(item => {
-        //   // Objeto con los códigos de idioma y sus correspondientes nombres completos
-        //   // Agrega la propiedad language_full al objeto utilizando el código de idioma
-        //   const selectedLanguage = language_available.find(option => option.language === item.language);
-        //   const language_full = selectedLanguage ? selectedLanguage.name : "Unknown";
-
-        //   return {
-        //     ...item,
-        //     language_full
-        //   };
-        // });
-
-        console.log("VIVA MARIO EL CASAS");
         response.files = newData;
-        console.log(response);
         setSubtitles(response);
         setSubtitlesVideo(response);
         setShouldRefreshSubtitles(false);
@@ -90,10 +66,10 @@ export function ListSubtitles({
       <h2 className="titulo-subtítulos">Listado de subtítulos generados</h2>
       <div className="testing">
         <h3>
-          ¿No te aparecen los subtítulos en el listado o en el reproductor? <br/> No
-          te preocupes, el proceso puede llevar un tiempo. Pulsa el botón de
-          "Actualizar subtítulos" y una vez aparezcan tus subtítulos en la lista estarán
-          disponibles en el reproductor.
+          ¿No te aparecen los subtítulos en el listado o en el reproductor?{" "}
+          <br /> No te preocupes, el proceso puede llevar un tiempo. Pulsa el
+          botón de "Actualizar subtítulos" y una vez aparezcan tus subtítulos en
+          la lista estarán disponibles en el reproductor.
         </h3>
         <Button className="button-recargar" onClick={onReload}>
           Actualizar subtítulos

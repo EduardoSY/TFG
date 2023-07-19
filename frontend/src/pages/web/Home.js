@@ -14,7 +14,6 @@ import { Button, Container, Divider, Message, Input } from "semantic-ui-react";
 import "./Home.scss";
 import { ENV } from "../../utils";
 
-
 export function Home() {
   const [showModalLocal, setShowModalLocal] = useState(false);
   const [showModalStream, setShowModalStream] = useState(false);
@@ -22,18 +21,15 @@ export function Home() {
   const [subtitleUrl, setSubtitleUrl] = useState(null);
   const [shouldRefreshSubtitles, setShouldRefreshSubtitles] = useState(false);
   const [allSubtitles, setAllSubtitles] = useState([]);
-
   const [urlvideo, setURLvideo] = useState(null);
-
   const [shouldReloadPlayer, setShouldReloadPlayer] = useState(false);
-
   const [videoJsOptions, setVideoJsOptions] = useState({
     autoplay: false,
     controls: true,
     responsive: true,
     fluid: true,
     preload: "auto",
-    liveui: true, 
+    liveui: true,
     sources: [
       {
         //src: 'http://127.0.0.1:8887/Muito_ArmaCSGO_Esp.mp4',
@@ -56,9 +52,8 @@ export function Home() {
   const handleBeforeSeek = (event) => {
     const time = playerRef.current.currentTime();
     const rangeValue = `bytes=${Math.floor(time)}-`;
-    playerRef.current.tech_.el_.setRequestHeader('Range', rangeValue);
+    playerRef.current.tech_.el_.setRequestHeader("Range", rangeValue);
   };
-
 
   const handlePlayerReady = (player) => {
     playerRef.current = player;
@@ -69,22 +64,11 @@ export function Home() {
       console.log(subtitle);
       player.addRemoteTextTrack(subtitle, false);
     });
-
-    // You can handle player events here, for example:
-    // player.on("waiting", () => {
-    //   videojs.log("player is waiting");
-    // });
-
-    // player.on("dispose", () => {
-    //   videojs.log("player will dispose");
-    // });
-    player.on('beforeseek', handleBeforeSeek);
-
+    player.on("beforeseek", handleBeforeSeek);
   };
 
   const setVideoUrl = (url) => {
-    console.log("ONICHAN");
-    console.log(url);
+    
     setURLvideo(url);
     setVideoJsOptions((prevOptions) => ({
       ...prevOptions,
@@ -96,7 +80,6 @@ export function Home() {
       ],
     }));
   };
-
 
   const setSubtitlesVideo = (subtitulos) => {
     console.log("Cambio En Subtitulos");
@@ -113,26 +96,16 @@ export function Home() {
         label: sub.language_full.toUpperCase(),
         src: path, // Ajusta la ruta del archivo de subtítulos según sea necesario
         srclang: sub.language.substring(0, 2).toLowerCase(),
-        default: true // Ajusta el campo del idioma según corresponda en tus datos de subtítulos
+        default: true, // Ajusta el campo del idioma según corresponda en tus datos de subtítulos
       });
     });
 
-    console.log("Cambio En Subtitulos 123");
-    //setVideoUrl(urlvideo);
-    console.log(subtitleItems);
+    //console.log(subtitleItems);
 
     setAllSubtitles(subtitleItems);
   };
 
   console.log(videoJsOptions);
-
-  // const handlePlayerReset = () => {
-  //   if (playerRef.current) {
-  //     playerRef.current.load();
-  //   }
-  // };
-
- 
 
   return (
     <div className="general-background">
@@ -150,12 +123,10 @@ export function Home() {
             Cargar video con enlace de Google Drive
           </Button>
         </div>
-        <h2 className="paso1-title">
-          ¿Ya has usado la aplicación?
-        </h2>
+        <h2 className="paso1-title">¿Ya has usado la aplicación?</h2>
         <h3 className="paso1-subtitle">
-          Utiliza el token que se generó en
-          tu última sesión y recupera o elimina tus datos.
+          Utiliza el token que se generó en tu última sesión y recupera o
+          elimina tus datos.
         </h3>
         <div className="component-div">
           <InputToken
@@ -164,13 +135,10 @@ export function Home() {
           />
         </div>
       </div>
-      {/* <p>Video URL: {videoJsOptions.sources[0].src}</p> */}
 
       {sessionStorage.getItem("token") !== null && (
         <Message className="custom-message-token" size="huge">
-          <h3 className="header-token-zone">
-            Token de identificación
-          </h3>
+          <h3 className="header-token-zone">Token de identificación</h3>
           <p className="text-token-zone">
             Guarda este token para recuperar o borrar tus datos más adelante.
           </p>
@@ -218,12 +186,11 @@ export function Home() {
         close={onOpenCloseModalStream}
         title="Cargar video con enlace de Google Drive"
       >
-        <FormularioModalStreaming setVideoUrl={setVideoUrl} setShouldRefreshSubtitles={setShouldRefreshSubtitles}/>
+        <FormularioModalStreaming
+          setVideoUrl={setVideoUrl}
+          setShouldRefreshSubtitles={setShouldRefreshSubtitles}
+        />
       </BasicModal>
-
-     
-
-    
     </div>
   );
 }
